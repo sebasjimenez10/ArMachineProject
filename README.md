@@ -3,8 +3,6 @@ AR-Machine Project
 
 ##Augmented Reality Capacitation System##
 
----
-
 ## Description
 This project pretends to train students in the use of plasma etching machines, using the advantages of augmented reality.
 
