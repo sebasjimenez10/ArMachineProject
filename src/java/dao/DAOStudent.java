@@ -1,11 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Universidad EAFIT
+ * Ing. de Sistemas
+ * 
+ * Proyecto Integrador 2
+ * 
+ * Name: Ar-Machine Project
  */
 package dao;
 
 import connection.DbConnection;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -13,11 +16,13 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author David
+ * @author Erika Gomez
+ * @author Sebastian Jimenez
+ * @author David Sttivend
+ * @author Ernesto Quintero
  */
 public class DAOStudent {
-    
-    
+
     String studentName;
     String studentLastName;
     String studentEmail;
@@ -42,5 +47,4 @@ public class DAOStudent {
         }
         return resultado;
     }
-    
 }
