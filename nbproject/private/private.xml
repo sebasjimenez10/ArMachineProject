@@ -4,5 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
         <file>file:/C:/Users/Menes/Documents/NetBeansProjects/WebProjects/ArMachineProject/src/java/webservices/StudentLogIn.java</file>
         <file>file:/C:/Users/Menes/Documents/NetBeansProjects/WebProjects/ArMachineProject/src/java/webservices/ProfessorLogIn.java</file>
+        <file>file:/C:/Users/Menes/Documents/NetBeansProjects/WebProjects/ArMachineProject/src/java/dao/DAOStudent.java</file>
+        <file>file:/C:/Users/Menes/Documents/NetBeansProjects/WebProjects/ArMachineProject/src/java/connection/DbConnection.java</file>
     </open-files>
 </project-private>
