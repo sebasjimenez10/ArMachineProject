@@ -26,9 +26,9 @@ import javax.ws.rs.QueryParam;
 public class ProfessorLogIn {
 
     @GET
-    public String testDb(@QueryParam("Professor") String usr, @QueryParam("Password") String passw) {
+    public String ProfessorLogIn(@QueryParam("Professor") String usr, @QueryParam("Password") String passw) {
         DAOProfessor DAOp = new DAOProfessor();
-        String rst = DAOp.LogInProfessor(usr, passw);
+        String rst = DAOp.ProfessorLogIn(usr, passw);
         if (rst == null) {
             return "Invalid Professor";
         }

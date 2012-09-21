@@ -30,7 +30,7 @@ public class DAOProfessor {
     String professorPassword;
     int professorId;
 
-    public String LogInProfessor(String usr, String passw) {
+    public String ProfessorLogIn(String usr, String passw) {
         String resultado = null;
         try {
 

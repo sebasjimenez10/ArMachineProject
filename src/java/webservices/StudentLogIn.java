@@ -23,12 +23,12 @@ import javax.ws.rs.QueryParam;
  */
 @Stateless
 @Path("/StudentLogIn")
-public class LogInStudent {
+public class StudentLogIn {
 
     @GET
-    public String LogInStudent(@QueryParam("Student") String usr, @QueryParam("Password") String passw) {
+    public String StudentLogIn(@QueryParam("Student") String usr, @QueryParam("Password") String passw) {
         DAOStudent DAOp = new DAOStudent();
-        String rst = DAOp.LogInStudent(usr, passw);
+        String rst = DAOp.StudentLogIn(usr, passw);
         if (rst == null) {
             return "Invalid Student";
         }

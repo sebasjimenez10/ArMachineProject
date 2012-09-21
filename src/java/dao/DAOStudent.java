@@ -30,7 +30,7 @@ public class DAOStudent {
     String studentPassword;
     int studentId;
 
-    public String LogInStudent(String usr, String passw) {
+    public String StudentLogIn(String usr, String passw) {
         String resultado = null;
         try {
             String logIn = "SELECT studentName, studentLastName FROM Student WHERE studentUser = '" + usr + "' AND studentPassword = '" + passw + "'";

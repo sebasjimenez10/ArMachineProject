@@ -42,11 +42,11 @@ public class DbConnection {
     }
 
     public ResultSet runSqlStatement(String sentencia) {
-        ResultSet a = null;
+        ResultSet sqlQuery = null;
         try {
             Statement statement = getConection().createStatement();
-            a = statement.executeQuery(sentencia);
-            return a;
+            sqlQuery = statement.executeQuery(sentencia);
+            return sqlQuery;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -54,6 +54,6 @@ public class DbConnection {
         } catch (SQLException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return a;
+        return sqlQuery;
     }
 }
