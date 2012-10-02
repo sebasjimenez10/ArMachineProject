@@ -33,7 +33,6 @@ public class DAOProfessor {
     public String ProfessorLogIn(String usr, String passw) {
         String resultado = null;
         try {
-
             String logIn = "SELECT professorName, professorLastName FROM Professor WHERE professorUser = '" + usr + "' AND professorPassword = '" + passw + "'";
             System.out.println("La sentencia es : " + logIn);
             DbConnection db = new DbConnection();
