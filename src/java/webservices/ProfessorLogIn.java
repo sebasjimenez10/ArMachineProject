@@ -27,8 +27,8 @@ public class ProfessorLogIn {
 
     @GET
     public String ProfessorLogIn(@QueryParam("Professor") String usr, @QueryParam("Password") String passw) {
-        DAOProfessor DAOp = new DAOProfessor();
-        String rst = DAOp.ProfessorLogIn(usr, passw);
+        DAOProfessor DAOProfessor = new DAOProfessor();
+        String rst = DAOProfessor.ProfessorLogIn(usr, passw);
         if (rst == null) {
             return "Invalid Professor";
         }

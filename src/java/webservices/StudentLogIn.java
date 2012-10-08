@@ -27,8 +27,8 @@ public class StudentLogIn {
 
     @GET
     public String StudentLogIn(@QueryParam("Student") String usr, @QueryParam("Password") String passw) {
-        DAOStudent DAOp = new DAOStudent();
-        String rst = DAOp.StudentLogIn(usr, passw);
+        DAOStudent DAOStudent = new DAOStudent();
+        String rst = DAOStudent.StudentLogIn(usr, passw);
         if (rst == null) {
             return "Invalid Student";
         }
