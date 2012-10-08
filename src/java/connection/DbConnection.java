@@ -29,9 +29,9 @@ public class DbConnection {
 
         Connection connection;
 
-        String host = "jdbc:mysql://mysql-armachinep.jelastic.servint.net/Armachine";
+        String host = "jdbc:mysql://localhost/Armachine";
         String username = "root";
-        String password = "armachinep";
+        String password = "root";
         String driver = "com.mysql.jdbc.Driver";
 
         Class.forName(driver);
