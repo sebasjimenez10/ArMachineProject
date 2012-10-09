@@ -58,18 +58,18 @@
             </div> 
 
             <div class="title" align="center">Login</div>
-
+                
             <div class="left_content">
                 <p><div align="right">Usuario: </div></p>
                 <p><div align="right">Contraseña: </div></p>
             </div>
-
+                
             <div class="right_content">
                 <p><input id="user" type="nombreUsuario" name="usuario"/></p>
-                <p><input id="pass" type="password" name="contraseña" /></p>
+                <p><input id="pass" type="password" name="contraseña" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
             </div>
 
-            <div align="center"><button onclick="callWS()">Ingresar</button></div>
+            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
 
             <div id="footer">
                 <div class="footer_links">                      
