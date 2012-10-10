@@ -9,5 +9,4 @@ package webservices;
  * @author David
  */
 public class RegistryTestQuestion {
-    
 }

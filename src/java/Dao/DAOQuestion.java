@@ -36,5 +36,4 @@ public class DAOQuestion {
         }
         return resultado;
     }
-    
 }

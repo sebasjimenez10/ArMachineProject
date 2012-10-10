@@ -19,7 +19,6 @@ public class DAOTag {
     public String registryTag(String nombreTag, String professor) {
 
         String resultado = "El registro no se pudo realizar";
-
         String idProfessor;
 
         DAOProfessor DAOp = new DAOProfessor();
@@ -35,38 +34,27 @@ public class DAOTag {
             System.out.println("RESULT SET = " + rs);
 
             if (rs != 0) {
-
                 resultado = "Registro Completo";
-
             }
-
         }
-
         return resultado;
-
     }
 
     public String getIdTag(String tagName) {
 
         String resultado = null;
         String query = "SELECT * FROM Tag WHERE tag = '" + tagName + "'";
-        
-        try {
 
+        try {
             DbConnection db = new DbConnection();
             ResultSet rs = db.runSqlStatement(query);
 
             if (rs.next()) {
                 resultado = rs.getString("idTag");
             }
-
-           
         } catch (SQLException ex) {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return resultado;
+        return resultado;
     }
-    
-    
-   
 }

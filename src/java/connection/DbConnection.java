@@ -10,7 +10,6 @@ package connection;
  */
 import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,47 +22,31 @@ public class DbConnection {
 
         Connection connection;
 
-        Properties prop = new Properties();
-        System.out.println("test");
-        //prop.load(new FileInputStream(/*System.getProperty("user.home") +*/ "/mydb.cfg"));
-        //System.out.println("user.home: "+System.getProperty("user.home"));
-        String host = "jdbc:mysql://mysql-armachinep.jelastic.servint.net/Armachine";//prop.getProperty("host").toString();
-        String username = "root"; //prop.getProperty("username").toString();
-        String password = "armachinep"; //prop.getProperty("password").toString();
-        String driver = "com.mysql.jdbc.Driver"; //prop.getProperty("driver").toString();
-
-        System.out.println("host: " + host + "\\username: " + username + "\\password: " + password + "\ndriver: " + driver);
+        String host = "jdbc:mysql://mysql-armachinep.jelastic.servint.net/Armachine";
+        String username = "root";
+        String password = "armachinep";
+        String driver = "com.mysql.jdbc.Driver";
 
         Class.forName(driver);
-        System.out.println("--------------------------");
         System.out.println("DRIVER: " + driver);
         connection = DriverManager.getConnection(host, username, password);
-        System.out.println("    ESTA ES MI CONEXION    ");
         System.out.println("CONNECTION: " + connection);
-
 
         return connection;
     }
 
     public ResultSet runSqlStatement(String sentencia) {
         ResultSet a = null;
-
         try {
-
             Statement statement = getConection().createStatement();
             a = statement.executeQuery(sentencia);
-
             return a;
-
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
-
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
-
         } catch (SQLException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
-
         }
         return a;
     }
@@ -71,10 +54,8 @@ public class DbConnection {
     public int runSqlUpdate(String query) {
         int rst = 0;
         try {
-
             Statement statement = getConection().createStatement();
             rst = statement.executeUpdate(query);
-
             return rst;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);

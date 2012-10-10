@@ -5,8 +5,6 @@
 package Dao;
 
 import connection.DbConnection;
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -62,21 +60,19 @@ public class DAOProfessor {
             return resultado;
         }
         return resultado;
-
-
     }
 
     public String searchProfessor(String name) {
 
         String resultado = null;
         String query = "SELECT * FROM Professor WHERE professorName = '" + name + "'";
-        
+
         try {
 
             DbConnection db = new DbConnection();
             ResultSet rs = db.runSqlStatement(query);
             if (rs.next()) {
-                
+
                 resultado = rs.getString("idProfessor");
             }
         } catch (SQLException ex) {

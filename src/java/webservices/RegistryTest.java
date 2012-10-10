@@ -4,9 +4,6 @@
  */
 package webservices;
 
-import Dao.DAOProfessor;
-import Dao.DAOStudent;
-import Dao.DAOTag;
 import Dao.DAOTest;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -23,7 +20,6 @@ public class RegistryTest {
 
     @GET
     public String Registry(@QueryParam("IdProfessor") String idProfessor, @QueryParam("TestName") String testName, @QueryParam("TestDescription") String testDescription, @QueryParam("TestDate") String testDate) {
-        //invoke el DAO
         String rst;
         DAOTest DAOt = new DAOTest();
         rst = DAOt.registryTest(idProfessor, testName, testDescription, testDate);

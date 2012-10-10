@@ -4,7 +4,6 @@
  */
 package webservices;
 
-import Dao.DAOProfessor;
 import Dao.DAOStudent;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -21,7 +20,6 @@ public class RegistryStudent {
 
     @GET
     public String Registry(@QueryParam("StudentName") String name, @QueryParam("StudentUser") String user, @QueryParam("StudentLastName") String lastName, @QueryParam("StudentEmail") String email, @QueryParam("StudentPassword") String password, @QueryParam("StudentProfessor") String professor) {
-        //invoke el DAO
         String rst;
 
         DAOStudent DAOs = new DAOStudent();

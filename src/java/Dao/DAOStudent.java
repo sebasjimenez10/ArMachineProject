@@ -5,7 +5,6 @@
 package Dao;
 
 import connection.DbConnection;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,8 +42,6 @@ public class DAOStudent {
     }
 
     public String registryStudent(String name, String user, String lastName, String email, String password, String professor) {
-
-
         String idProfessor = null;
         String resultado = "No se pudo ejecutar el registro, Valide sus datos";
 
@@ -64,11 +61,7 @@ public class DAOStudent {
                 System.out.println("Result Set = " + rs);
                 resultado = "Registro Completo";
             }
-
         }
-
         return resultado;
-
-
     }
 }

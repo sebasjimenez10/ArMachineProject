@@ -4,8 +4,6 @@
  */
 package webservices;
 
-import Dao.DAOProfessor;
-import Dao.DAOStudent;
 import Dao.DAOTag;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -22,12 +20,11 @@ public class RegistryTag {
 
     @GET
     public String Registry(@QueryParam("TagName") String tagName, @QueryParam("ProfessorName") String professorName) {
-        //invoke el DAO
-         String rst;
+        String rst;
 
         DAOTag DAOt = new DAOTag();
 
-        rst = DAOt.registryTag(tagName,professorName);
+        rst = DAOt.registryTag(tagName, professorName);
         System.out.println("RESULTADO REGISTRY = " + rst);
 
         return rst;

@@ -11,12 +11,8 @@ package Dao;
 public class DAOTestQuestion {
 
     public String registryTestQuestion(String idTest, String idQuestion) {
-
         String resultado = "El Registro no se pudo Realizar";
         String [] arr = idQuestion.split(",");
-        
-
-
         return resultado;
     }
 }
