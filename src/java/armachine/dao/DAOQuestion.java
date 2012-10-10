@@ -13,9 +13,8 @@
  * @author David Sttivend
  * @author Ernesto Quintero
  */
-package armachine.Dao;
+package armachine.dao;
 
-import Dao.DAOTag;
 import armachine.connection.DbConnection;
 
 public class DAOQuestion {

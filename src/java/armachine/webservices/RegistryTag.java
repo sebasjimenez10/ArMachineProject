@@ -13,9 +13,9 @@
  * @author David Sttivend
  * @author Ernesto Quintero
  */
-package webservices;
+package armachine.webservices;
 
-import Dao.DAOTag;
+import armachine.dao.DAOTag;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

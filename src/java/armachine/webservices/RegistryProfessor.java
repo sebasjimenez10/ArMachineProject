@@ -13,9 +13,10 @@
  * @author David Sttivend
  * @author Ernesto Quintero
  */
-package webservices;
+package armachine.webservices;
 
-import Dao.DAOProfessor;
+
+import armachine.dao.DAOProfessor;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

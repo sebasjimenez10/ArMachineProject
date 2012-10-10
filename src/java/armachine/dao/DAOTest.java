@@ -13,9 +13,9 @@
  * @author David Sttivend
  * @author Ernesto Quintero
  */
-package Dao;
+package armachine.dao;
 
-import connection.DbConnection;
+import armachine.connection.DbConnection;
 
 public class DAOTest {
     

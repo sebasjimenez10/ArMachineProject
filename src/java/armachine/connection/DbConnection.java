@@ -56,4 +56,20 @@ public class DbConnection {
         }
         return sqlQuery;
     }
+    
+    public int runSqlUpdate(String query) {
+        int rst = 0;
+        try {
+            Statement statement = getConection().createStatement();
+            rst = statement.executeUpdate(query);
+            return rst;
+        } catch (IOException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rst;
+    }
 }
