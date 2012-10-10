@@ -16,7 +16,8 @@
                 init();
                 var user = document.getElementById("user");
                 var pass = document.getElementById("pass");
-                var url = "http://localhost:8080/ArMachineProject/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
+                //var url = "http://localhost:8080/ArMachineProject/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
+                var url = "http://http://armachinep.jelastic.servint.net/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
