@@ -1,6 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Universidad EAFIT
+ * Ing. de Sistemas
+ * 
+ * Proyecto Integrador 2
+ * 
+ * Name: Ar-Machine Project
+ */
+/**
+ *
+ * @author Erika Gomez
+ * @author Sebastian Jimenez
+ * @author David Sttivend
+ * @author Ernesto Quintero
  */
 package Dao;
 
@@ -10,10 +21,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author David
- */
 public class DAOProfessor {
 
     String professorName;
