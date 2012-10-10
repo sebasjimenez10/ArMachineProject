@@ -1,25 +1,19 @@
-/*
- * Universidad EAFIT
- * Ing. de Sistemas
- * 
- * Proyecto Integrador 2
- * 
- * Name: Ar-Machine Project
+    /*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package connection;
 
+/**
+ *
+ * @author Menes
+ */
 import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Erika Gomez
- * @author Sebastian Jimenez
- * @author David Sttivend
- * @author Ernesto Quintero
- */
 public class DbConnection {
 
     public DbConnection() {
@@ -29,24 +23,59 @@ public class DbConnection {
 
         Connection connection;
 
-        String host = "jdbc:mysql://mysql-armachinep.jelastic.servint.net/Armachine";
-        String username = "root";
-        String password = "armachinep";
-        String driver = "com.mysql.jdbc.Driver";
-        
+        Properties prop = new Properties();
+        System.out.println("test");
+        //prop.load(new FileInputStream(/*System.getProperty("user.home") +*/ "/mydb.cfg"));
+        //System.out.println("user.home: "+System.getProperty("user.home"));
+        String host = "jdbc:mysql://mysql-armachinep.jelastic.servint.net/Armachine";//prop.getProperty("host").toString();
+        String username = "root"; //prop.getProperty("username").toString();
+        String password = "armachinep"; //prop.getProperty("password").toString();
+        String driver = "com.mysql.jdbc.Driver"; //prop.getProperty("driver").toString();
+
+        System.out.println("host: " + host + "\\username: " + username + "\\password: " + password + "\ndriver: " + driver);
+
         Class.forName(driver);
+        System.out.println("--------------------------");
         System.out.println("DRIVER: " + driver);
         connection = DriverManager.getConnection(host, username, password);
+        System.out.println("    ESTA ES MI CONEXION    ");
         System.out.println("CONNECTION: " + connection);
+
+
         return connection;
     }
 
     public ResultSet runSqlStatement(String sentencia) {
-        ResultSet sqlQuery = null;
+        ResultSet a = null;
+
         try {
+
             Statement statement = getConection().createStatement();
-            sqlQuery = statement.executeQuery(sentencia);
-            return sqlQuery;
+            a = statement.executeQuery(sentencia);
+
+            return a;
+
+        } catch (IOException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return a;
+    }
+
+    public int runSqlUpdate(String query) {
+        int rst = 0;
+        try {
+
+            Statement statement = getConection().createStatement();
+            rst = statement.executeUpdate(query);
+
+            return rst;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -54,6 +83,6 @@ public class DbConnection {
         } catch (SQLException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return sqlQuery;
+        return rst;
     }
 }
