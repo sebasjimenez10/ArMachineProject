@@ -5,5 +5,4 @@
 *.ear
 /build/
 /dist/
-/web/
 /nbproject/
