@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package restfulws.service.hello;
+package webservices;
 
 import Dao.DAOProfessor;
 import Dao.DAOStudent;
