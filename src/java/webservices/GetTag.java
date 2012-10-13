@@ -22,16 +22,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 @Stateless
-@Path("/RegistryTag")
-public class RegistryTag {
+@Path("/GetTag")
+public class GetTag {
 
     @GET
-    public String Registry(@QueryParam("TagName") String tagName, @QueryParam("IdProfessor") String professorName) {
+    public String Registry(@QueryParam("idProfessor") String idProfessor) {
         String rst;
 
         DAOTag DAOt = new DAOTag();
 
-        rst = DAOt.registryTag(tagName, professorName);
+        rst = DAOt.getTag(idProfessor);
         System.out.println("RESULTADO REGISTRY = " + rst);
 
         return rst;

@@ -16,22 +16,23 @@
 package webservices;
 
 import Dao.DAOTag;
+import Dao.DAOTest;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 @Stateless
-@Path("/RegistryTag")
-public class RegistryTag {
+@Path("/GetTest")
+public class GetTest {
 
     @GET
-    public String Registry(@QueryParam("TagName") String tagName, @QueryParam("IdProfessor") String professorName) {
+    public String Registry(@QueryParam("idProfessor") String idProfessor) {
         String rst;
 
-        DAOTag DAOt = new DAOTag();
+        DAOTest DAOt = new DAOTest();
 
-        rst = DAOt.registryTag(tagName, professorName);
+        rst = DAOt.getTestNames(idProfessor);
         System.out.println("RESULTADO REGISTRY = " + rst);
 
         return rst;

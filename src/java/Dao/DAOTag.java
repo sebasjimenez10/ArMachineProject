@@ -64,4 +64,33 @@ public class DAOTag {
         }
         return resultado;
     }
+
+    public String getTag(String idProfessor) {
+
+        String resultado = null;
+        String query = "SELECT tag FROM Tag WHERE idProfessor = \"" + idProfessor + "\"";
+
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+
+        try {
+            if (rs.next()) {
+                resultado = rs.getString("tag");
+              
+                while(rs.next()) {
+                  
+                    resultado = resultado + ","+rs.getString("tag");
+                    
+                    
+                }
+                System.out.println("El resultado fue : "+ resultado);
+            }
+
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return resultado;
+    }
 }
