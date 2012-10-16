@@ -9,31 +9,52 @@
                 // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
                 xmlhttp = new XMLHttpRequest();
             }
-            function hello(){
-                alert("Oeeeeee");
-            }
+            
             function callWS() {
                 init();
                 var user = document.getElementById("user");
                 var pass = document.getElementById("pass");
-                var url = "http://armachinep.j.layershift.co.uk/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
-                xmlhttp.open('GET',url,true);
-                xmlhttp.setRequestHeader("Content-Type", "text/plain");
-                xmlhttp.send(null);
-                xmlhttp.onreadystatechange = function() {
+                if (document.form.professor.checked) {
+                    var url = "http://armachinep.j.layershift.co.uk/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
+                    xmlhttp.open('GET',url,true);
+                    xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                    xmlhttp.send(null);
+                    xmlhttp.onreadystatechange = function() {
 
-                    if (xmlhttp.readyState == 4) {
-                        if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "Invalid Student" ){
-                                alert( xmlhttp.responseText );
+                        if (xmlhttp.readyState == 4) {
+                            if ( xmlhttp.status == 200) {
+                                if( xmlhttp.responseText == "Invalid Student" ){
+                                    alert( xmlhttp.responseText );
+                                }else{
+                                    alert("Welcome!! " + xmlhttp.responseText);
+                                    window.location.replace("abc");
+                                }
                             }else{
-                                alert("Welcome!! " + xmlhttp.responseText);
+                                alert("Error code ->" + xmlhttp.status);
                             }
-                        }else{
-                            alert("Error code ->" + xmlhttp.status);
                         }
-                    }
-                };
+                    };
+                }else{
+                    var url = "http://armachinep.j.layershift.co.uk/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
+                    xmlhttp.open('GET',url,true);
+                    xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                    xmlhttp.send(null);
+                    xmlhttp.onreadystatechange = function() {
+
+                        if (xmlhttp.readyState == 4) {
+                            if ( xmlhttp.status == 200) {
+                                if( xmlhttp.responseText == "Invalid Student" ){
+                                    alert( xmlhttp.responseText );
+                                }else{
+                                    alert("Welcome!! " + xmlhttp.responseText);
+                                    window.location.replace("abc");
+                                }
+                            }else{
+                                alert("Error code ->" + xmlhttp.status);
+                            }
+                        }
+                    };
+                }
             }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -42,44 +63,48 @@
         <![endif]--> 
     </head>
     <body>
-        <div class="wrap">
-            <div class="header">
-                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
-
-            </div>
-
-            <div id="menu">
-                <ul>                                                                       
-                    <li class="selected"><a href="index.html">Inicio</a></li>
-                    <li><a href="register.html">Registro</a></li>
-                    <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li>                                                                     			
-                </ul>
-            </div> 
-
-            <div class="title" align="center">Login</div>
+        <form method="POST" name="form">
+            <div class="wrap">
+                <div class="header">
+                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
+                </div>
                 
-            <div class="left_content">
-                <p><div align="right">Usuario: </div></p>
-                <p><div align="right">Contraseña: </div></p>
-            </div>
-                
-            <div class="right_content">
-                <p><input id="user" type="nombreUsuario" name="usuario"/></p>
-                <p><input id="pass" type="password" name="contraseña" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
-            </div>
+                <div id="menu">
+                    <ul>                                                                       
+                        <li class="selected"><a href="index.html">Inicio</a></li>
+                        <li><a href="register.html">Registro</a></li>
+                        <li><a href="#">Ayuda</a></li>                                                                     
+                        <li><a href="login.html">Entrar</a></li>                                                                     			
+                    </ul>
+                </div> 
 
-            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+                <div class="title" align="center">Login</div>
 
-            <div id="footer">
-                <div class="footer_links">                      
-                    <a href="index.html">Inicio</a>
-                    <a href="register.html">Registro</a>
-                    <a href="#">Ayuda</a>
-                    <a href="login.html">Entrar</a>
-                    <a href="#">Contacto</a>          
-                </div>   
-            </div> 
-        </div>
+                <div class="left_content">
+                    <p><div align="right">Usuario: </div></p>
+                    <p><div align="right">Contraseña: </div></p>
+                    <p><div align="right">Profesor </div></p>
+                </div>
+
+                <div class="right_content">
+                    <p><input id="user" name="user"/></p>
+                    <p><input id="pass" type="password" name="pass" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
+                    <p><input id="professor" type="checkbox" name="professor"/></p>
+                    <p></p>
+                </div>
+
+                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+                <div id="footer">
+                    <div class="footer_links">                      
+                        <a href="index.html">Inicio</a>
+                        <a href="register.html">Registro</a>
+                        <a href="#">Ayuda</a>
+                        <a href="login.html">Entrar</a>
+                        <a href="#">Contacto</a>          
+                    </div>   
+                </div> 
+            </div>
+        </form>
     </body>
 </html>
