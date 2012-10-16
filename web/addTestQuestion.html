@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>AR-Machine</title>
+        <script language="JavaScript">
+            var xmlhttp;
+            function init() {
+                // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
+                xmlhttp = new XMLHttpRequest();
+            }
+            
+            function callWS() {
+                init();
+                var questionSentence = document.getElementById("questionSentence");
+                var nameTest = document.getElementById("nameTest");
+               
+        var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "Registry question to test fail" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                alert("Succesfull!! " + xmlhttp.responseText);
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+            }
+            
+        </script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <!--[if IE 6]>
+                <script type="text/javascript" src="unitpngfix.js"></script>
+        <![endif]--> 
+    </head>
+    <body>
+        <form method="POST" name="form">
+            <div class="wrap">
+                <div class="header">
+                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
+                </div>
+
+                <div id="menu">
+                    <ul>                                                                       
+                        <li class="selected"><a href="index.html">Inicio</a></li>
+                        <li><a href="register.html">Registro</a></li>
+                        <li><a href="#">Ayuda</a></li>                                                                     
+                        <li><a href="login.html">Entrar</a></li>                                                                     			
+                    </ul>
+                </div> 
+
+                <div class="title" align="center">Agregar pregunta a un test</div>
+
+                <div class="left_content">
+                    <p><div align="right">Nombre test: </div></p>
+                    <p><div align="right">Preguntas: </div></p>
+                </div>
+
+                <div class="right_content">
+                    <p><select id="nameTest" name="nameTest" size=1> </select></p>
+                    <table>
+                        <tr>
+                            <td>Select</td>
+                            <td>pregunta</td>
+                        </tr>
+                        <tr>
+                            <td><input name="questionSentence" type="checkbox" value="p1"  /></td>
+                            <td>p1</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                </div>
+
+                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+                <div id="footer">
+                    <div class="footer_links">                      
+                        <a href="index.html">Inicio</a>
+                        <a href="register.html">Registro</a>
+                        <a href="#">Ayuda</a>
+                        <a href="login.html">Entrar</a>
+                        <a href="#">Contacto</a>          
+                    </div>   
+                </div> 
+            </div>
+        </form>
+    </body>
+</html>

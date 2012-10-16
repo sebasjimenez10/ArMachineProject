@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>AR-Machine</title>
+        <script language="JavaScript">
+            var xmlhttp;
+            function init() {
+                // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
+                xmlhttp = new XMLHttpRequest();
+            }
+            
+            function callWS() {
+                init();
+                var sentence = document.getElementById("sentence");
+                var optionA = document.getElementById("optionA");
+                var optionB = document.getElementById("optionB");
+                var optionC = document.getElementById("optionC");
+                var optionD = document.getElementById("optionD");
+                var correct = document.getElementById("correct");
+                var idProfessor = 0;
+                var tag = document.getElementById("tag");
+                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryQuestion?Sentence=" + sentence.value + "OpcionA=" + optionA.value + "OpcionB=" + optionB.value + "OpcionC=" + optionC.value + "OpcionD=" + optionD.value + "Correct=" + correct.value + "IdProfessor=" + idProfessor.value+  "&TagName=" + tag.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "Registry question fail" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                alert("Succesfull!! " + xmlhttp.responseText);
+                                window.location.replace("abc");
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+            }
+            
+        </script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <!--[if IE 6]>
+                <script type="text/javascript" src="unitpngfix.js"></script>
+        <![endif]--> 
+    </head>
+    <body>
+        <form method="POST" name="form">
+            <div class="wrap">
+                <div class="header">
+                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
+                </div>
+
+                <div id="menu">
+                    <ul>                                                                       
+                        <li class="selected"><a href="index.html">Inicio</a></li>
+                        <li><a href="register.html">Registro</a></li>
+                        <li><a href="#">Ayuda</a></li>                                                                     
+                        <li><a href="login.html">Entrar</a></li>                                                                     			
+                    </ul>
+                </div> 
+
+                <div class="title" align="center">Agregar Pregunta</div>
+
+                <div class="left_content">
+                    <p><div align="right">Enunciado: </div></p>
+                    <br> </br>
+                    <p><div align="right">Opcion A: </div></p>
+                    <br> </br>
+                    <p><div align="right">Opcion B: </div></p>
+                    <br> </br>
+                    <p><div align="right">Opcion C: </div></p>
+                    <br> </br>
+                    <p><div align="right">Opcion D: </div></p>
+                    <br> </br>
+                    <p><div align="right">Opcion Correcta: </div></p>
+                    <p><div align="right">Categoria: </div></p>
+                </div>
+
+                <div class="right_content">
+                    <p><textarea id="sentence" name="sentence" rows="3" cols="50"></textarea></p>
+                    <p><textarea id="optionA" name="optionA" rows="3" cols="50"></textarea></p>
+                    <p><textarea id="optionB" name="optionB" rows="3" cols="50"></textarea></p>
+                    <p><textarea id="optionC" name="optionC" rows="3" cols="50"></textarea></p>
+                    <p><textarea id="optionD" name="optionD" rows="3" cols="50"></textarea></p>
+                    <p><select id="correct" name="correct" size=1> 
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select></p>
+                    <p><select id="tag" name="tag" size=1> </select></p>
+                    <p></p>
+                </div>
+
+                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+                <div id="footer">
+                    <div class="footer_links">                      
+                        <a href="index.html">Inicio</a>
+                        <a href="register.html">Registro</a>
+                        <a href="#">Ayuda</a>
+                        <a href="login.html">Entrar</a>
+                        <a href="#">Contacto</a>          
+                    </div>   
+                </div> 
+            </div>
+        </form>
+    </body>
+</html>
