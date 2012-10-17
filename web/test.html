@@ -18,7 +18,7 @@
                 var prof = "2";
                 var date = "2012/10/16";
                 //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof.value + "TestName=" + nameTest.value+ "TestDescription=" + description.value + "&TestDate=" + date.value;
-                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof.value + "TestName=" + nameTest.value+ "TestDescription=" + description.value + "&TestDate=" + date;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
                 alert(date);
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
