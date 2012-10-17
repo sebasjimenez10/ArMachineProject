@@ -13,10 +13,10 @@
  * @author David Sttivend
  * @author Ernesto Quintero
  */
-package armachine.webservices;
+package webservices;
 
 
-import armachine.dao.DAOQuestion;
+import Dao.DAOQuestion;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
