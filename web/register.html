@@ -10,10 +10,12 @@
                 xmlhttp = new XMLHttpRequest();
             }
             function professorCheck() {
-                if (document.form.professor.checked) {
-                    document.form.codProfessor.disabled=false
+                var profCheckbox = document.getElementById("professor");
+                var codProfessor = document.getElementById("codProfessor");
+                if (profCheckbox.checked) {
+                    codProfessor.disabled=false
                 }else{
-                    document.form.codProfessor.disabled=true
+                    codProfessor.disabled=true
                 }
             }
             
@@ -26,8 +28,10 @@
                 var email = doccument.getElementById("email");
                 var codProfessor = doccument.getElementById("codProfessor");
                 var prof = document.getElementById("prof");
-                if (document.form.professor.checked) {
-                    var url = "http://armachinep.j.layershift.co.uk/resources/RegistryProfessor?ProfessorName=" + name.value + "ProfessorUser=" + user.value + "ProfessorLastName=" + lastName.value + "ProfessorEmail=" + email.value +"ProfessorPassword=" + pass.value + "&codProfessor="+ codProfessor.value ;
+                var profCheckbox = document.getElementById("professor");
+                if (profCheckbox.checked) {
+                    //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryProfessor?ProfessorName=" + name.value + "ProfessorUser=" + user.value + "ProfessorLastName=" + lastName.value + "ProfessorEmail=" + email.value +"ProfessorPassword=" + pass.value + "&codProfessor="+ codProfessor.value ;
+                    var url = "http://localhost:8080/ArMachineProject/resources/RegistryProfessor?ProfessorName=" + name.value + "ProfessorUser=" + user.value + "ProfessorLastName=" + lastName.value + "ProfessorEmail=" + email.value +"ProfessorPassword=" + pass.value + "&codProfessor="+ codProfessor.value ;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -46,7 +50,9 @@
                             }
                         }
                     };
-                }else{var url = "http://armachinep.j.layershift.co.uk/resources/RegistryStudent?StudentName=" + name.value + "StudentUser=" + user.value + "StudentLastName=" + lastName.value + "StudentEmail=" + email.value +"StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
+                }else{
+                    //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryStudent?StudentName=" + name.value + "StudentUser=" + user.value + "StudentLastName=" + lastName.value + "StudentEmail=" + email.value +"StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
+                    var url = "http://localhost:8080/ArMachineProject/resources/RegistryStudent?StudentName=" + name.value + "StudentUser=" + user.value + "StudentLastName=" + lastName.value + "StudentEmail=" + email.value +"StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -75,7 +81,6 @@
         <![endif]--> 
     </head>
     <body>
-        <form method="POST" name="form">
             <div class="wrap">
                 <div class="header">
                     <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -123,6 +128,5 @@
                     </div>
                 </div> 
             </div>
-        </form>
     </body>
 </html>

@@ -14,9 +14,12 @@
                 init();
                 var nameTest = document.getElementById("nameTest");
                 var description = document.getElementById("description");
-                var prof = document.getgetElementById("prof");
-                var date = new Date();
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof.value + "TestName=" + nameTest.value+ "TestDescription=" + description.value + "&TestDate=" + date.value;
+                //var prof = document.getgetElementById("prof");
+                var prof = "2";
+                var date = "2012/10/16";
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof.value + "TestName=" + nameTest.value+ "TestDescription=" + description.value + "&TestDate=" + date.value;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof.value + "TestName=" + nameTest.value+ "TestDescription=" + description.value + "&TestDate=" + date;
+                alert(date);
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -24,7 +27,7 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "Registry test fail" ){
+                            if( xmlhttp.responseText == "El Registro no se pudo realizar" ){
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
@@ -44,7 +47,6 @@
         <![endif]--> 
     </head>
     <body>
-        <form method="POST" name="form">
             <div class="wrap">
                 <div class="header">
                     <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -84,6 +86,5 @@
                     </div>   
                 </div> 
             </div>
-        </form>
     </body>
 </html>

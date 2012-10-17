@@ -18,19 +18,19 @@ package armachine.dao;
 import armachine.connection.DbConnection;
 
 public class DAOTest {
-    
-    public String registryTest(String idProfessor, String testName, String testDescription, String testDate){
-        
-    String resultado = "El Registro no se pudo realizar";
-    String query = "INSERT INTO Test(idProfessor, nameTest,descriptionTest,dateTest) VALUES (\""+idProfessor+"\",\""+testName+"\",\""+testDescription+"\",\""+testDate+"\")";
-        System.out.println("La Sentencia es : "+query);
-        
+
+    public String registryTest(String idProfessor, String testName, String testDescription, String testDate) {
+
+        String resultado = "El Registro no se pudo realizar";
+        String query = "INSERT INTO Test(idProfessor, nameTest,descriptionTest,dateTest) VALUES (\"" + idProfessor + "\",\"" + testName + "\",\"" + testDescription + "\",\"" + testDate + "\")";
+        System.out.println("La Sentencia es : " + query);
+
         DbConnection db = new DbConnection();
         int rs = db.runSqlUpdate(query);
-        
-        if(rs != 0){
+
+        if (rs != 0) {
             resultado = "Registro de Test Completo";
         }
-    return resultado;
+        return resultado;
     }
 }
