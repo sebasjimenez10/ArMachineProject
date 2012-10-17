@@ -14,8 +14,7 @@
                 init();
                 var questionSentence = document.getElementById("questionSentence");
                 var nameTest = document.getElementById("nameTest");
-               
-        var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
+                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -42,7 +41,6 @@
         <![endif]--> 
     </head>
     <body>
-        <form method="POST" name="form">
             <div class="wrap">
                 <div class="header">
                     <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -91,6 +89,5 @@
                     </div>   
                 </div> 
             </div>
-        </form>
     </body>
 </html>

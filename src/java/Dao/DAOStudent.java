@@ -15,7 +15,7 @@
  */
 package Dao;
 
-import connection.DbConnection;
+import armachine.connection.DbConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,7 +43,7 @@ public class DAOStudent {
                 return resultado;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOProfessor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOStudent.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
     }

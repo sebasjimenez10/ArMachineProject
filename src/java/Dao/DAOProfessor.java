@@ -15,7 +15,7 @@
  */
 package Dao;
 
-import connection.DbConnection;
+import armachine.connection.DbConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -87,4 +87,36 @@ public class DAOProfessor {
         }
         return resultado;
     }
+    
+    public String getProfessors() {
+
+        String resultado = "No se pudo realizar la busqueda";
+        String query = "SELECT * FROM Professor";
+
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+
+        try {
+            if (rs.next()) {
+                resultado = rs.getString("professorName");
+
+                while (rs.next()) {
+
+                    resultado = resultado + "," + rs.getString("professorName");
+
+
+                }
+                System.out.println("El resultado fue : " + resultado);
+            }
+
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
+
+        return resultado;
+    }    
 }

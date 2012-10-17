@@ -16,7 +16,6 @@
 package webservices;
 
 import Dao.DAOQuestion;
-import Dao.DAOTag;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

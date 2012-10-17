@@ -14,8 +14,10 @@
                 init();
                 var user = document.getElementById("user");
                 var pass = document.getElementById("pass");
-                if (document.form.professor.checked) {
+                var prof = document.getElementById("professor");
+                if (prof.checked) {
                     var url = "http://armachinep.j.layershift.co.uk/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
+                    //var url = "http://localhost:8080/ArMachineProject/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -26,8 +28,8 @@
                                 if( xmlhttp.responseText == "Invalid Student" ){
                                     alert( xmlhttp.responseText );
                                 }else{
-                                    alert("Welcome!! " + xmlhttp.responseText);
-                                    window.location.replace("abc");
+                                    //window.location.replace("http://localhost:8080/ArMachineProject/professorMenu.html");
+                                    window.location.replace("/professorMenu.html");
                                 }
                             }else{
                                 alert("Error code ->" + xmlhttp.status);
@@ -35,6 +37,7 @@
                         }
                     };
                 }else{
+                    //var url = "http://localhost:8080/ArMachineProject/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
                     var url = "http://armachinep.j.layershift.co.uk/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
@@ -46,8 +49,8 @@
                                 if( xmlhttp.responseText == "Invalid Student" ){
                                     alert( xmlhttp.responseText );
                                 }else{
-                                    alert("Welcome!! " + xmlhttp.responseText);
-                                    window.location.replace("abc");
+                                    //window.location.replace("http://localhost:8080/ArMachineProject/student.html");
+                                    window.location.replace("/student.html");
                                 }
                             }else{
                                 alert("Error code ->" + xmlhttp.status);
@@ -63,48 +66,46 @@
         <![endif]--> 
     </head>
     <body>
-        <form method="POST" name="form">
-            <div class="wrap">
-                <div class="header">
-                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
-                </div>
-                
-                <div id="menu">
-                    <ul>                                                                       
-                        <li class="selected"><a href="index.html">Inicio</a></li>
-                        <li><a href="register.html">Registro</a></li>
-                        <li><a href="#">Ayuda</a></li>                                                                     
-                        <li><a href="login.html">Entrar</a></li>                                                                     			
-                    </ul>
-                </div> 
-
-                <div class="title" align="center">Login</div>
-
-                <div class="left_content">
-                    <p><div align="right">Usuario: </div></p>
-                    <p><div align="right">Contraseña: </div></p>
-                    <p><div align="right">Profesor </div></p>
-                </div>
-
-                <div class="right_content">
-                    <p><input id="user" name="user"/></p>
-                    <p><input id="pass" type="password" name="pass" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
-                    <p><input id="professor" type="checkbox" name="professor"/></p>
-                    <p></p>
-                </div>
-
-                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
-
-                <div id="footer">
-                    <div class="footer_links">                      
-                        <a href="index.html">Inicio</a>
-                        <a href="register.html">Registro</a>
-                        <a href="#">Ayuda</a>
-                        <a href="login.html">Entrar</a>
-                        <a href="#">Contacto</a>          
-                    </div>   
-                </div> 
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
             </div>
-        </form>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                </ul>
+            </div> 
+
+            <div class="title" align="center">Login</div>
+
+            <div class="left_content">
+                <p><div align="right">Usuario: </div></p>
+                <p><div align="right">Contraseña: </div></p>
+                <p><div align="right">Profesor </div></p>
+            </div>
+
+            <div class="right_content">
+                <p><input id="user" name="user"/></p>
+                <p><input id="pass" type="password" name="pass" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
+                <p><input id="professor" type="checkbox" name="professor"/></p>
+                <p></p>
+            </div>
+
+            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>
+                    <a href="#">Contacto</a>          
+                </div>   
+            </div> 
+        </div>
     </body>
 </html>

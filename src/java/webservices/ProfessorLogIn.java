@@ -6,13 +6,6 @@
  * 
  * Name: Ar-Machine Project
  */
-/**
- *
- * @author Erika Gomez
- * @author Sebastian Jimenez
- * @author David Sttivend
- * @author Ernesto Quintero
- */
 package webservices;
 
 import Dao.DAOProfessor;
@@ -21,14 +14,21 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
+/**
+ *
+ * @author Erika Gomez
+ * @author Sebastian Jimenez
+ * @author David Sttivend
+ * @author Ernesto Quintero
+ */
 @Stateless
 @Path("/ProfessorLogIn")
-public class LogInProfessor {
+public class ProfessorLogIn {
 
     @GET
-    public String testDb(@QueryParam("Professor") String usr, @QueryParam("Password") String passw) {
-        DAOProfessor DAOp = new DAOProfessor();
-        String rst = DAOp.LogInProfessor(usr, passw);
+    public String ProfessorLogIn(@QueryParam("Professor") String usr, @QueryParam("Password") String passw) {
+        DAOProfessor DAOProfessor = new DAOProfessor();
+        String rst = DAOProfessor.LogInProfessor(usr, passw);
         if (rst == null) {
             return "Invalid Professor";
         }

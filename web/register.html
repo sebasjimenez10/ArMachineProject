@@ -10,24 +10,64 @@
                 xmlhttp = new XMLHttpRequest();
             }
             function professorCheck() {
-                if (document.form.professor.checked) {
-                    document.form.codProfessor.disabled=false
+                var profCheckbox = document.getElementById("professor");
+                var codProfessor = document.getElementById("codProfessor");
+                if (profCheckbox.checked) {
+                    codProfessor.disabled=false
                 }else{
-                    document.form.codProfessor.disabled=true
+                    codProfessor.disabled=true
                 }
+            }
+            
+            function getProfessors(){
+                init();
+                var profComboBox = document.getElementById("prof");
+                var list;
+                //var url = "http://localhost:8080/ArMachineProject/resources/GetProfessor?";
+                var url = "http://armachinep.j.layershift.co.uk/resources/GetProfessor?";
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "Registry fail" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText.split(",");
+                                
+                                var n = 0;
+                                while ( n < list.length ){
+                                    profComboBox.options[profComboBox.options.length] = new Option(list[n], list[n]);
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
             }
             
             function callWS() {
                 init();
                 var user = document.getElementById("user");
                 var pass = document.getElementById("pass");
-                var name = doccument.getElementById("name");
-                var lastName = doccument.getElementById("lastName");
-                var email = doccument.getElementById("email");
-                var codProfessor = doccument.getElementById("codProfessor");
+                var name = document.getElementById("name");
+                var lastName = document.getElementById("lastName");
+                var email = document.getElementById("email");
+                var codProfessor = document.getElementById("codProfessor");
                 var prof = document.getElementById("prof");
-                if (document.form.professor.checked) {
-                    var url = "http://armachinep.j.layershift.co.uk/resources/RegistryProfessor?ProfessorName=" + name.value + "ProfessorUser=" + user.value + "ProfessorLastName=" + lastName.value + "ProfessorEmail=" + email.value +"ProfessorPassword=" + pass.value + "&codProfessor="+ codProfessor.value ;
+                var profCheckbox = document.getElementById("professor");
+                if (profCheckbox.checked) {
+                    if( codProfessor.value != "0001" ){
+                        alert("Codigo de profesor inválido");
+                        return;
+                    }
+                    var url = "http://armachinep.j.layershift.co.uk/resources/RegistryProfessor?ProfessorName=" + name.value + "&ProfessorUser=" + user.value + "&ProfessorLastName=" + lastName.value + "&ProfessorEmail=" + email.value +"&ProfessorPassword=" + pass.value;
+                    //var url = "http://localhost:8080/ArMachineProject/resources/RegistryProfessor?ProfessorName=" + name.value + "&ProfessorUser=" + user.value + "&ProfessorLastName=" + lastName.value + "&ProfessorEmail=" + email.value +"&ProfessorPassword=" + pass.value;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -46,7 +86,10 @@
                             }
                         }
                     };
-                }else{var url = "http://armachinep.j.layershift.co.uk/resources/RegistryStudent?StudentName=" + name.value + "StudentUser=" + user.value + "StudentLastName=" + lastName.value + "StudentEmail=" + email.value +"StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
+                }else{
+                    var url = "http://armachinep.j.layershift.co.uk/resources/RegistryStudent?StudentName=" + name.value + "&StudentUser=" + user.value + "&StudentLastName=" + lastName.value + "&StudentEmail=" + email.value +"&StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
+                    //var url = "http://localhost:8080/ArMachineProject/resources/RegistryStudent?StudentName=" + name.value + "&StudentUser=" + user.value + "&StudentLastName=" + lastName.value + "&StudentEmail=" + email.value +"&StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
+                    //alert(url);
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -74,55 +117,53 @@
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body>
-        <form method="POST" name="form">
-            <div class="wrap">
-                <div class="header">
-                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
-                </div>
-
-                <div id="menu">
-                    <ul>                                                                       
-                        <li class="selected"><a href="index.html">Inicio</a></li>
-                        <li><a href="register.html">Registro</a></li>
-                        <li><a href="#">Ayuda</a></li>                                                                     
-                        <li><a href="login.html">Entrar</a></li>                                                                      			
-                    </ul>
-                </div> 
-
-                <div class="title" align="center">Registro</div>
-
-                <div class="left_content">
-                    <p><div align="right">Nombre: </div></p>
-                    <p><div align="right">Apellido: </div></p>
-                    <p><div align="right">Correo Electronico: </div></p>
-                    <p><div align="right">Nombre de Usuario:</div></p>
-                    <p><div align="right">Contraseña: </div></p>
-                    <p><div align="right">Profesor Asignado: </div></p>
-                    <p><div align="right">Codigo de Profesor: </div></p>
-                </div>
-
-                <div class="right_content">
-                    <p><input id="name" name="name" /></p>
-                    <p><input id="lastName" name="lastName" /></p>
-                    <p><input id="email" name="email" /></p>
-                    <p><input id="user" name="user" /></p>
-                    <p><input id="pass" type="password" name="pass" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()" /></p>
-                    <p><select id="prof" name="prof" size=1> </select></p>
-                    <p><input id="codProfessor" name="codProfessor" disabled/><input id="professor" type="checkbox" name="professor" onclick="professorCheck()"/></p>
-                </div>
-                <p><div align="center"><button id="btn" onclick="callWS()">Registrar</button></div></p>
-
-                <div id="footer">
-                    <div class="footer_links">                      
-                        <a href="index.html">Inicio</a>
-                        <a href="register.html">Registro</a>
-                        <a href="#">Ayuda</a>
-                        <a href="login.html">Entrar</a>
-                        <a href="#">Contacto</a>          
-                    </div>
-                </div> 
+    <body onload="getProfessors();">
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
             </div>
-        </form>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                      			
+                </ul>
+            </div> 
+
+            <div class="title" align="center">Registro</div>
+
+            <div class="left_content">
+                <p><div align="right">Nombre: </div></p>
+                <p><div align="right">Apellido: </div></p>
+                <p><div align="right">Correo Electronico: </div></p>
+                <p><div align="right">Nombre de Usuario:</div></p>
+                <p><div align="right">Contraseña: </div></p>
+                <p><div align="right">Profesor Asignado: </div></p>
+                <p><div align="right">Codigo de Profesor: </div></p>
+            </div>
+
+            <div class="right_content">
+                <p><input id="name" name="name" /></p>
+                <p><input id="lastName" name="lastName" /></p>
+                <p><input id="email" name="email" /></p>
+                <p><input id="user" name="user" /></p>
+                <p><input id="pass" type="password" name="pass" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()" /></p>
+                <p><select id="prof" name="prof"> </select></p>
+                <p><input id="codProfessor" name="codProfessor" disabled/><input id="professor" type="checkbox" name="professor" onclick="professorCheck()"/></p>
+            </div>
+            <p><div align="center"><button id="btn" onclick="callWS()">Registrar</button></div></p>
+
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>
+                    <a href="#">Contacto</a>          
+                </div>
+            </div> 
+        </div>
     </body>
 </html>

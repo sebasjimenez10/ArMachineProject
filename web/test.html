@@ -14,9 +14,12 @@
                 init();
                 var nameTest = document.getElementById("nameTest");
                 var description = document.getElementById("description");
-                var prof = document.getgetElementById("prof");
-                var date = new Date();
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof.value + "TestName=" + nameTest.value+ "TestDescription=" + description.value + "&TestDate=" + date.value;
+                //var prof = document.getgetElementById("prof");
+                var prof = "2";
+                var date = "2012/10/16";
+                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
+                //var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
+                //alert(date);
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -24,7 +27,7 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "Registry test fail" ){
+                            if( xmlhttp.responseText == "El Registro no se pudo realizar" ){
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
@@ -44,46 +47,44 @@
         <![endif]--> 
     </head>
     <body>
-        <form method="POST" name="form">
-            <div class="wrap">
-                <div class="header">
-                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
-                </div>
-
-                <div id="menu">
-                    <ul>                                                                       
-                        <li class="selected"><a href="index.html">Inicio</a></li>
-                        <li><a href="register.html">Registro</a></li>
-                        <li><a href="#">Ayuda</a></li>                                                                     
-                        <li><a href="login.html">Entrar</a></li>                                                                     			
-                    </ul>
-                </div> 
-
-                <div class="title" align="center">Agregar test</div>
-
-                <div class="left_content">
-                    <p><div align="right">Nombre: </div></p>
-                    <p><div align="right">Descripcion: </div></p>
-                </div>
-
-                <div class="right_content">
-                    <p><input id="nameTest" name="nameTest"/></p>
-                    <p><textarea id="description" name="description" rows="5" cols="50"></textarea></p>
-                    <p></p>
-                </div>
-
-                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
-
-                <div id="footer">
-                    <div class="footer_links">                      
-                        <a href="index.html">Inicio</a>
-                        <a href="register.html">Registro</a>
-                        <a href="#">Ayuda</a>
-                        <a href="login.html">Entrar</a>
-                        <a href="#">Contacto</a>          
-                    </div>   
-                </div> 
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
             </div>
-        </form>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                </ul>
+            </div> 
+
+            <div class="title" align="center">Agregar test</div>
+
+            <div class="left_content">
+                <p><div align="right">Nombre: </div></p>
+                <p><div align="right">Descripcion: </div></p>
+            </div>
+
+            <div class="right_content">
+                <p><input id="nameTest" name="nameTest"/></p>
+                <p><textarea id="description" name="description" rows="5" cols="50"></textarea></p>
+                <p></p>
+            </div>
+
+            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>
+                    <a href="#">Contacto</a>          
+                </div>   
+            </div> 
+        </div>
     </body>
 </html>

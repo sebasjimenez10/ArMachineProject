@@ -15,6 +15,8 @@
  */
 package webservices;
 
+import Dao.DAOProfessor;
+import Dao.DAOQuestion;
 import Dao.DAOTag;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -22,16 +24,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 @Stateless
-@Path("/RegistryTag")
-public class RegistryTag {
+@Path("/GetProfessor")
+public class GetProfessor {
 
     @GET
-    public String Registry(@QueryParam("TagName") String tagName, @QueryParam("ProfessorName") String professorName) {
+    public String Registry() {
         String rst;
 
-        DAOTag DAOt = new DAOTag();
+        DAOProfessor DAOp = new DAOProfessor();
 
-        rst = DAOt.registryTag(tagName, professorName);
+        rst = DAOp.getProfessors();
         System.out.println("RESULTADO REGISTRY = " + rst);
 
         return rst;

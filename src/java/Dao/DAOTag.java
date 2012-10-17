@@ -15,7 +15,7 @@
  */
 package Dao;
 
-import connection.DbConnection;
+import armachine.connection.DbConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -64,7 +64,7 @@ public class DAOTag {
         }
         return resultado;
     }
-
+    
     public String getTag(String idProfessor) {
 
         String resultado = null;
