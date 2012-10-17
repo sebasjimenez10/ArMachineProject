@@ -15,7 +15,7 @@
  */
 package Dao;
 
-import armachine.connection.DbConnection;
+import connection.DbConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

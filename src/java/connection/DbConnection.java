@@ -6,7 +6,7 @@
  * 
  * Name: Ar-Machine Project
  */
-package armachine.connection;
+package connection;
 
 import java.io.IOException;
 import java.sql.*;

@@ -13,9 +13,13 @@
  * @author David Sttivend
  * @author Ernesto Quintero
  */
-package armachine.dao;
+package Dao;
 
-import armachine.connection.DbConnection;
+import connection.DbConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DAOTest {
 
@@ -33,4 +37,34 @@ public class DAOTest {
         }
         return resultado;
     }
+    
+    public String getTestNames(String idProfessor){
+        
+        String resultado = null;
+        String query = "SELECT nameTest FROM Test WHERE idProfessor = \""+idProfessor+"\"";
+       
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+
+        try {
+            if (rs.next()) {
+                resultado = rs.getString("nameTest");
+              
+                while(rs.next()) {
+                  
+                    resultado = resultado + ","+rs.getString("nameTest");
+                    
+                    
+                }
+                System.out.println("El resultado fue : "+ resultado);
+            }
+
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        return resultado;
+    }    
 }
