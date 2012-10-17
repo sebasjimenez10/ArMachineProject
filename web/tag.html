@@ -13,8 +13,9 @@
             function callWS() {
                 init();
                 var nameTag = document.getElementById("nameTag");
-                var nameProfesor = 0;
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTag?TagName=" + nameTag.value +"&ProfessorName=" + nameProfesor.value;
+                var nameProfesor = "Dr Jimenez";
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTag?TagName=" + nameTag.value +"&ProfessorName=" + nameProfesor;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTag?TagName=" + nameTag.value +"&ProfessorName=" + nameProfesor;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);

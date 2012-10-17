@@ -18,9 +18,11 @@
                 var optionC = document.getElementById("optionC");
                 var optionD = document.getElementById("optionD");
                 var correct = document.getElementById("correct");
-                var idProfessor = 0;
-                var tag = document.getElementById("tag");
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryQuestion?Sentence=" + sentence.value + "OpcionA=" + optionA.value + "OpcionB=" + optionB.value + "OpcionC=" + optionC.value + "OpcionD=" + optionD.value + "Correct=" + correct.value + "IdProfessor=" + idProfessor.value+  "&TagName=" + tag.value;
+                var idProfessor = "2";
+                //var tag = document.getElementById("tag");
+                var tag = "Vacio";
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryQuestion?Sentence=" + sentence.value + "OpcionA=" + optionA.value + "OpcionB=" + optionB.value + "OpcionC=" + optionC.value + "OpcionD=" + optionD.value + "Correct=" + correct.value + "IdProfessor=" + idProfessor.value+  "&TagName=" + tag.value;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -48,64 +50,64 @@
         <![endif]--> 
     </head>
     <body>
-            <div class="wrap">
-                <div class="header">
-                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
-                </div>
-
-                <div id="menu">
-                    <ul>                                                                       
-                        <li class="selected"><a href="index.html">Inicio</a></li>
-                        <li><a href="register.html">Registro</a></li>
-                        <li><a href="#">Ayuda</a></li>                                                                     
-                        <li><a href="login.html">Entrar</a></li>                                                                     			
-                    </ul>
-                </div> 
-
-                <div class="title" align="center">Agregar Pregunta</div>
-
-                <div class="left_content">
-                    <p><div align="right">Enunciado: </div></p>
-                    <br> </br>
-                    <p><div align="right">Opcion A: </div></p>
-                    <br> </br>
-                    <p><div align="right">Opcion B: </div></p>
-                    <br> </br>
-                    <p><div align="right">Opcion C: </div></p>
-                    <br> </br>
-                    <p><div align="right">Opcion D: </div></p>
-                    <br> </br>
-                    <p><div align="right">Opcion Correcta: </div></p>
-                    <p><div align="right">Categoria: </div></p>
-                </div>
-
-                <div class="right_content">
-                    <p><textarea id="sentence" name="sentence" rows="3" cols="50"></textarea></p>
-                    <p><textarea id="optionA" name="optionA" rows="3" cols="50"></textarea></p>
-                    <p><textarea id="optionB" name="optionB" rows="3" cols="50"></textarea></p>
-                    <p><textarea id="optionC" name="optionC" rows="3" cols="50"></textarea></p>
-                    <p><textarea id="optionD" name="optionD" rows="3" cols="50"></textarea></p>
-                    <p><select id="correct" name="correct" size=1> 
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                        </select></p>
-                    <p><select id="tag" name="tag" size=1> </select></p>
-                    <p></p>
-                </div>
-
-                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
-
-                <div id="footer">
-                    <div class="footer_links">                      
-                        <a href="index.html">Inicio</a>
-                        <a href="register.html">Registro</a>
-                        <a href="#">Ayuda</a>
-                        <a href="login.html">Entrar</a>
-                        <a href="#">Contacto</a>          
-                    </div>   
-                </div> 
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
             </div>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                </ul>
+            </div> 
+
+            <div class="title" align="center">Agregar Pregunta</div>
+
+            <div class="left_content">
+                <p><div align="right">Enunciado: </div></p>
+                <br> </br>
+                <p><div align="right">Opcion A: </div></p>
+                <br> </br>
+                <p><div align="right">Opcion B: </div></p>
+                <br> </br>
+                <p><div align="right">Opcion C: </div></p>
+                <br> </br>
+                <p><div align="right">Opcion D: </div></p>
+                <br> </br>
+                <p><div align="right">Opcion Correcta: </div></p>
+                <p><div align="right">Categoria: </div></p>
+            </div>
+
+            <div class="right_content">
+                <p><textarea id="sentence" name="sentence" rows="3" cols="50"></textarea></p>
+                <p><textarea id="optionA" name="optionA" rows="3" cols="50"></textarea></p>
+                <p><textarea id="optionB" name="optionB" rows="3" cols="50"></textarea></p>
+                <p><textarea id="optionC" name="optionC" rows="3" cols="50"></textarea></p>
+                <p><textarea id="optionD" name="optionD" rows="3" cols="50"></textarea></p>
+                <p><select id="correct" name="correct" size=1> 
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select></p>
+                <p><select id="tag" name="tag" size=1> </select></p>
+                <p></p>
+            </div>
+
+            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>
+                    <a href="#">Contacto</a>          
+                </div>   
+            </div> 
+        </div>
     </body>
 </html>
