@@ -28,7 +28,6 @@ public class LogInStudent {
     @GET
     public String LogInStudent(@QueryParam("Student") String usr, @QueryParam("Password") String passw) {
         DAOStudent DAOs = new DAOStudent();
-
         String rst = DAOs.LogInStudent(usr, passw);
         if (rst == null) {
             return "Invalid Student";
