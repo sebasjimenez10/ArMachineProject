@@ -15,23 +15,22 @@
  */
 package webservices;
 
-import Dao.DAOStudent;
+import Dao.DAOProfessor;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 @Stateless
-@Path("/StudentLogIn")
-public class LogInStudent {
+@Path("/ProfessorLogIn")
+public class LogInProfessor {
 
     @GET
-    public String LogInStudent(@QueryParam("Student") String usr, @QueryParam("Password") String passw) {
-        DAOStudent DAOs = new DAOStudent();
-
-        String rst = DAOs.LogInStudent(usr, passw);
+    public String testDb(@QueryParam("Professor") String usr, @QueryParam("Password") String passw) {
+        DAOProfessor DAOp = new DAOProfessor();
+        String rst = DAOp.LogInProfessor(usr, passw);
         if (rst == null) {
-            return "Invalid Student";
+            return "Invalid Professor";
         }
         return rst;
     }

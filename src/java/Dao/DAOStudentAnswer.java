@@ -1,23 +1,13 @@
 /*
- * Universidad EAFIT
- * Ing. de Sistemas
- * 
- * Proyecto Integrador 2
- * 
- * Name: Ar-Machine Project
- */
-/**
- *
- * @author Erika Gomez
- * @author Sebastian Jimenez
- * @author David Sttivend
- * @author Ernesto Quintero
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Dao;
 
 import connection.DbConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logic.GradeCalc;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -30,8 +20,10 @@ public class DAOStudentAnswer {
 
     public String DoTest(String js) {
         String result = "No se pudo realizar la Operación";
+        DAOQuestion DAOq = new DAOQuestion();
+
+        JSONArray Corrects = null;
         String query;
-        DbConnection db = new DbConnection();
         String idTest;
         String idStudent;
         int rs;
@@ -49,13 +41,36 @@ public class DAOStudentAnswer {
 
             for (int i = 0; i < idQuestion.length(); i++) {
 
-                query = "INSERT INTO StudentAnswer( idTestQuestion, idStudent, idTest, answer) VALUES (\"" + idQuestion.get(i) + "\",\"" + idStudent + "\",\"" + idTest + "\",\"" + answer.get(i) + "\")";
-                rs = db.runSqlUpdate(query);
+                query = "INSERT INTO StudentAnswer( StudentAnswer.idTestQuestion, StudentAnswer.idStudent, StudentAnswer.idTest, StudentAnswer.answer) VALUES (\"" + idQuestion.get(i) + "\",\"" + idStudent + "\",\"" + idTest + "\",\"" + answer.get(i) + "\")";
+                rs = DbConnection.runSqlUpdate(query);
                 if (rs == 0) {
                     error = true;
                 }
 
             }
+
+            Corrects = DAOq.getCorrectAnswers(idQuestion);
+            String resultGrade;
+
+            if (Corrects != null) {
+
+                GradeCalc gc = new GradeCalc();
+                Double grade = gc.CalculateGrade(answer, Corrects);
+
+                if (grade != -1) {
+
+                    DAOStudentTest DAOst = new DAOStudentTest();
+                    resultGrade = DAOst.UpdateStudentTest(idStudent, idTest, grade);
+
+                    if (resultGrade.equals("No se pudo realizar la Operacion")) {
+
+                        error = true;
+                    }
+
+                }
+
+            }
+
             result = "Registro Completo";
             if (error == true) {
                 result = "Registro con Errores";

@@ -39,8 +39,8 @@ public class DAOQuestion {
             String query = "INSERT INTO Question(sentence , idProfessor , idTag , optionA , optionB , optionC , optionD , correct) VALUES (\"" + sentence + "\",\"" + idProfessor + "\",\"" + idTag + "\",\"" + opcionA + "\",\"" + opcionB + "\",\"" + opcionC + "\",\"" + opcionD + "\",\"" + correct + "\")";
             System.out.println("La Sentencia es : " + query);
 
-            DbConnection db = new DbConnection();
-            int rs = db.runSqlUpdate(query);
+
+            int rs = DbConnection.runSqlUpdate(query);
             System.out.println("RESUL SET = " + rs);
 
             if (rs != 0) {
@@ -56,8 +56,7 @@ public class DAOQuestion {
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT idQuestion FROM Question WHERE sentence = \"" + nombre + "\"";
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
 
@@ -79,8 +78,7 @@ public class DAOQuestion {
         JSONArray ja = new JSONArray();
         JSONObject js = new JSONObject();
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
 
         try {
 
@@ -91,7 +89,7 @@ public class DAOQuestion {
 
             }
             if (ja.length() > 0) {
-                
+
                 js.put("sentence", ja);
 
                 result = js.toString();
@@ -105,6 +103,34 @@ public class DAOQuestion {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
+        return result;
+
+    }
+
+    public JSONArray getCorrectAnswers(JSONArray idQuestion) {
+
+        JSONArray result = new JSONArray();
+        String query;
+        ResultSet rs;
+        try {
+            for (int i = 0; i < idQuestion.length(); i++) {
+
+                query = "SELECT correct FROM Question WHERE idQuestion = \"" + idQuestion.get(i) + "\"";
+                rs = DbConnection.runSqlStatement(query);
+                if (rs.next()) {
+                    result.put(rs.getString("correct"));
+                }
+
+            }
+            System.out.println("EL JSONArray idQuestion = " + idQuestion.toString());
+            System.out.println("EL JSONArray Result = " + result.toString());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOQuestion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(DAOQuestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return result;
 

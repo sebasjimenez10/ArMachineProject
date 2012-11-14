@@ -34,10 +34,11 @@ public class DAOProfessor {
         String resultado = null;
 
 
-        String logIn = "SELECT professorName, professorLastName, idProfessor FROM Professor WHERE professorUser = '" + usr + "' AND professorPassword = '" + passw + "'";
-        System.out.println("La sentencia es : " + logIn);
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(logIn);
+        String query = "SELECT professorName, professorLastName, idProfessor FROM Professor WHERE professorUser = '" + usr + "' AND professorPassword = '" + passw + "'";
+        System.out.println("La sentencia es : " + query);
+
+
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
 
@@ -59,8 +60,7 @@ public class DAOProfessor {
 
         String query = "INSERT INTO Professor(professorName, professorUser, professorLastName, professorEmail, professorPassword) VALUES (\"" + name + "\",\"" + user + "\",\"" + lastName + "\",\"" + email + "\",\"" + password + "\")";
         System.out.println("La sentencia es : " + query);
-        DbConnection db = new DbConnection();
-        int rs = db.runSqlUpdate(query);
+        int rs = DbConnection.runSqlUpdate(query);
 
         System.out.println("RESULT SET = " + rs);
         if (rs != 0) {
@@ -78,8 +78,7 @@ public class DAOProfessor {
 
 
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
 
@@ -96,9 +95,7 @@ public class DAOProfessor {
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT * FROM Professor";
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
-
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
                 result = rs.getString("professorName");

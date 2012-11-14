@@ -52,12 +52,11 @@ public class DAOTestQuestion {
         
         if (idQuestion != null && idTest != null) {
             
-            DbConnection db = new DbConnection();
             
             for (int i = 0; i < idQuestion.length; i++) {
                 query = "INSERT INTO TestQuestion(idQuestion, idTest) VALUES (\"" + idQuestion[i] + "\",\"" + idTest + "\")";
                 
-                rs[i] = db.runSqlUpdate(query);
+                rs[i] = DbConnection.runSqlUpdate(query);
                 System.out.println("El RS en " + i + " fue " + rs[i]);
                 if (rs[i] == 0) {
                     error = true;
@@ -84,7 +83,6 @@ public class DAOTestQuestion {
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT Question.idQuestion, Question.sentence, Question.optionA, Question.optionB, Question.optionC, Question.optionD FROM Question, TestQuestion WHERE TestQuestion.idTest = \"" + idTest + "\" AND TestQuestion.idQuestion = Question.idQuestion ";
         JSONObject js = new JSONObject();
-        DbConnection db = new DbConnection();
         JSONArray idQuestions = new JSONArray();
         JSONArray Sentences = new JSONArray();
         JSONArray OptionsA = new JSONArray();
@@ -92,7 +90,7 @@ public class DAOTestQuestion {
         JSONArray OptionsC = new JSONArray();
         JSONArray OptionsD = new JSONArray();
         
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             
             while (rs.next()) {

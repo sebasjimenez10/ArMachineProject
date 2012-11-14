@@ -36,8 +36,7 @@ public class DAOTag {
             String query = "INSERT INTO Tag(tag,idProfessor) VALUES (\"" + nombreTag + "\",\"" + idProfessor + "\")";
             System.out.println("La Sentencia es : " + query);
 
-            DbConnection db = new DbConnection();
-            int rs = db.runSqlUpdate(query);
+            int rs = DbConnection.runSqlUpdate(query);
             System.out.println("RESULT SET = " + rs);
 
             if (rs != 0) {
@@ -53,8 +52,7 @@ public class DAOTag {
         String query = "SELECT * FROM Tag WHERE tag = '" + tagName + "'";
 
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
                 result = rs.getString("idTag");
@@ -72,8 +70,7 @@ public class DAOTag {
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT tag FROM Tag WHERE idProfessor = \"" + idProfessor + "\"";
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
 
         try {
             if (rs.next()) {

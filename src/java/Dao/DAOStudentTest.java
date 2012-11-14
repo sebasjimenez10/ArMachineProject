@@ -1,17 +1,6 @@
 /*
- * Universidad EAFIT
- * Ing. de Sistemas
- * 
- * Proyecto Integrador 2
- * 
- * Name: Ar-Machine Project
- */
-/**
- *
- * @author Erika Gomez
- * @author Sebastian Jimenez
- * @author David Sttivend
- * @author Ernesto Quintero
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Dao;
 
@@ -34,7 +23,6 @@ public class DAOStudentTest {
         String result = "No se pudo realizar la Consulta";
         JSONObject js = new JSONObject();
         String query = "SELECT Student.studentName, Test.nameTest, StudentTest.grade FROM Student, Test, StudentTest WHERE Student.idProfessor =  \"" + idProfessor + "\" AND Test.idProfessor = \"" + idProfessor + "\" AND Student.idStudent = StudentTest.idStudent AND Test.idTest = StudentTest.idTest AND StudentTest.idState = 1";
-        DbConnection db = new DbConnection();
 
 
         int length;
@@ -42,7 +30,7 @@ public class DAOStudentTest {
         String[] nameTest;
         String[] grades;
 
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.last()) {
                 length = rs.getRow();
@@ -83,10 +71,9 @@ public class DAOStudentTest {
     public String GetUnassignTest(String idStudent, String idProfessor) {
 
         String result = "No se pudo realizar la Consulta";
-        String query = "SELECT nameTest FROM Test WHERE Test.idProfessor = \""+idProfessor+"\" AND Test.idTest NOT IN(SELECT Test.idTest  FROM Test, StudentTest WHERE StudentTest.idTest = Test.idTest AND StudentTest.idStudent = \""+idStudent+"\")";
+        String query = "SELECT nameTest FROM Test WHERE Test.idProfessor = \"" + idProfessor + "\" AND Test.idTest NOT IN(SELECT Test.idTest  FROM Test, StudentTest WHERE StudentTest.idTest = Test.idTest AND StudentTest.idStudent = \"" + idStudent + "\")";
         System.out.println("La Sentencia fue =" + query);
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
                 result = rs.getString("nameTest");
@@ -113,8 +100,7 @@ public class DAOStudentTest {
         String result = "No se pudo realizar la Operación";
         String query = "INSERT INTO StudentTest(idStudent, idTest, idState) VALUES (\"" + idStudent + "\",\"" + idTest + "\",\"" + 3 + "\")";
         System.out.println("La sentencia es :" + query);
-        DbConnection db = new DbConnection();
-        int rs = db.runSqlUpdate(query);
+        int rs = DbConnection.runSqlUpdate(query);
         if (rs != 0) {
             System.out.println("Result Set = " + rs);
             result = "Registro Completo";
@@ -128,8 +114,7 @@ public class DAOStudentTest {
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT Test.nameTest FROM Test, StudentTest WHERE StudentTest.idStudent = \"" + idStudent + "\" AND StudentTest.idState = \"" + 3 + "\" AND StudentTest.idTest = Test.idTest";
         System.out.println("La sentenica es: " + query);
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
                 result = rs.getString("nameTest");
@@ -157,8 +142,7 @@ public class DAOStudentTest {
         int length;
 
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.last()) {
                 length = rs.getRow();
@@ -199,8 +183,7 @@ public class DAOStudentTest {
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT Test.nameTest FROM Test, StudentTest WHERE StudentTest.idStudent = " + idStudent + " AND StudentTest.idState = 1 AND StudentTest.idTest = Test.idTest";
         System.out.println("La sentencia fue: " + query);
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
 
         try {
             if (rs.next()) {
@@ -225,8 +208,7 @@ public class DAOStudentTest {
 
         String result = "No se pudo realizar la Consulta";
         String query = "DELETE FROM StudentTest WHERE StudentTest.idStudent = \"" + idStudent + "\" AND StudentTest.idTest = \"" + idTest + "\"";
-        DbConnection db = new DbConnection();
-        int rs = db.runSqlUpdate(query);
+        int rs = DbConnection.runSqlUpdate(query);
         if (rs == 0) {
             result = "No se pudo realizar la Operación";
         } else {
@@ -234,5 +216,16 @@ public class DAOStudentTest {
         }
         return result;
 
+    }
+
+    public String UpdateStudentTest(String idStudent, String idTest, double grade) {
+        
+        String result = "No se pudo realizar la Operacion";
+        String query = "UPDATE StudentTest SET idState= 1, grade=\"" + grade + "\" WHERE idStudent = " + idStudent + " AND idTest = \"" + idTest + "\"";
+        int rs = DbConnection.runSqlUpdate(query);
+        if (rs != 0) {
+            result = "Registro Completo";
+        }
+        return result;
     }
 }

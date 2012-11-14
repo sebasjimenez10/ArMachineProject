@@ -37,8 +37,7 @@ public class DAOStudent {
         String resultado = null;
         try {
             String logIn = "SELECT studentName, studentLastName, idStudent FROM Student WHERE studentUser = '" + usr + "' AND studentPassword = '" + passw + "'";
-            DbConnection db = new DbConnection();
-            ResultSet rs = db.runSqlStatement(logIn);
+            ResultSet rs = DbConnection.runSqlStatement(logIn);
             if (rs.next()) {
                 studentName = rs.getString("studentName");
                 studentLastName = rs.getString("studentLastname");
@@ -64,8 +63,8 @@ public class DAOStudent {
             String query = "INSERT INTO Student(studentName, studentUser, studentLastName, studentEmail, studentPassword, idProfessor) VALUES (\"" + name + "\",\"" + user + "\",\"" + lastName + "\",\"" + email + "\",\"" + password + "\", " + idProfessor + " )";
             System.out.println("La sentencia es : " + query);
 
-            DbConnection db = new DbConnection();
-            int rs = db.runSqlUpdate(query);
+            
+            int rs = DbConnection.runSqlUpdate(query);
             System.out.println("RESULT SET = " + rs);
 
             if (rs != 0) {
@@ -80,8 +79,8 @@ public class DAOStudent {
 
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT studentName, idStudent FROM Student WHERE idProfessor = \"" + idProfessor + "\"";
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        
+        ResultSet rs = DbConnection.runSqlStatement(query);
         JSONObject js = new JSONObject();
         JSONArray nombreEstudiantes = new JSONArray();
         JSONArray idEstudiantes = new JSONArray();
@@ -111,8 +110,7 @@ public class DAOStudent {
         String result = "No se pudo realizar la consulta";
         String query = "SELECT idStudent FROM Student WHERE studentName = \"" + studentName + "\"";
         System.out.println("La Sentencia fue =" + query);
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
                 result = rs.getString("idStudent");
@@ -128,8 +126,7 @@ public class DAOStudent {
         String result = "No se pudo realizar la consulta";
         String query = "SELECT idProfessor FROM Student WHERE idStudent = \"" + idStudent + "\"";
         System.out.println("La Sentencia fue =" + query);
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
         try {
             if (rs.next()) {
                 result = rs.getString("idProfessor");

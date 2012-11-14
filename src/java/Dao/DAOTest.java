@@ -32,8 +32,7 @@ public class DAOTest {
         String query = "INSERT INTO Test(idProfessor, nameTest,descriptionTest,dateTest) VALUES (\"" + idProfessor + "\",\"" + testName + "\",\"" + testDescription + "\",\"" + testDate + "\")";
         System.out.println("La Sentencia es : " + query);
 
-        DbConnection db = new DbConnection();
-        int rs = db.runSqlUpdate(query);
+        int rs = DbConnection.runSqlUpdate(query);
 
         if (rs != 0) {
             resultado = "Registro de Test Completo";
@@ -49,8 +48,7 @@ public class DAOTest {
         System.out.println("La Sentencia es : " + query);
         try {
 
-            DbConnection db = new DbConnection();
-            ResultSet rs = db.runSqlStatement(query);
+            ResultSet rs = DbConnection.runSqlStatement(query);
 
             if (rs.next()) {
 
@@ -70,21 +68,21 @@ public class DAOTest {
 
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT nameTest, idTest FROM Test WHERE idProfessor = \"" + idProfessor + "\"";
+        System.out.println("La Sentencia es :" + query);
         JSONObject js = new JSONObject();
         JSONArray idTest = new JSONArray();
         JSONArray nameTest = new JSONArray();
 
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
+        ResultSet rs = DbConnection.runSqlStatement(query);
 
         try {
-            if(!rs.isBeforeFirst()){
-                result = "Cero resultados";
-                return result;
-            }
+
             while (rs.next()) {
+                System.out.println("ENTRE al CICLO");
+
                 nameTest.put(rs.getString("nameTest"));
                 idTest.put(rs.getString("idTest"));
+
             }
 
             js.put("nameTest", nameTest);
@@ -92,11 +90,18 @@ public class DAOTest {
 
             result = js.toString();
 
+            if (rs == null) {
+                result = "Cero resultados";
+            }
+
+
         } catch (JSONException ex) {
             Logger.getLogger(DAOTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
         return result;
     }
 }
