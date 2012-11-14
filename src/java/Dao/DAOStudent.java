@@ -20,6 +20,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 public class DAOStudent {
 
@@ -28,29 +31,30 @@ public class DAOStudent {
     String studentEmail;
     String studentUser;
     String studentPassword;
-    int studentId;
+    String studentId;
 
     public String LogInStudent(String usr, String passw) {
         String resultado = null;
         try {
-            String logIn = "SELECT studentName, studentLastName FROM Student WHERE studentUser = '" + usr + "' AND studentPassword = '" + passw + "'";
+            String logIn = "SELECT studentName, studentLastName, idStudent FROM Student WHERE studentUser = '" + usr + "' AND studentPassword = '" + passw + "'";
             DbConnection db = new DbConnection();
             ResultSet rs = db.runSqlStatement(logIn);
             if (rs.next()) {
                 studentName = rs.getString("studentName");
                 studentLastName = rs.getString("studentLastname");
-                resultado = studentName + " " + studentLastName;
+                studentId = rs.getString("idStudent");
+                resultado = studentName + " " + studentLastName + " " + studentId;
                 return resultado;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOStudent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOProfessor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
     }
 
     public String registryStudent(String name, String user, String lastName, String email, String password, String professor) {
         String idProfessor = null;
-        String resultado = "No se pudo ejecutar el registro, Valide sus datos";
+        String resultado = "No se pudo realizar la Operación, verifique que selecciono su profesor asignado";
 
         DAOProfessor DAOp = new DAOProfessor();
         idProfessor = DAOp.searchProfessor(professor);
@@ -70,5 +74,71 @@ public class DAOStudent {
             }
         }
         return resultado;
+    }
+
+    public String getStudents(String idProfessor) {
+
+        String result = "No se pudo realizar la Consulta";
+        String query = "SELECT studentName, idStudent FROM Student WHERE idProfessor = \"" + idProfessor + "\"";
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+        JSONObject js = new JSONObject();
+        JSONArray nombreEstudiantes = new JSONArray();
+        JSONArray idEstudiantes = new JSONArray();
+        try {
+
+            while (rs.next()) {
+
+                nombreEstudiantes.put(rs.getString("studentName"));
+                idEstudiantes.put(rs.getString("idStudent"));
+            }
+            js.put("studentName", nombreEstudiantes);
+            js.put("idStudent", idEstudiantes);
+
+            result = js.toString();
+            System.out.println("El Resultado fue : " + result);
+
+        } catch (JSONException ex) {
+            Logger.getLogger(DAOStudent.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOStudent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public String GetIdStudent(String studentName) {
+
+        String result = "No se pudo realizar la consulta";
+        String query = "SELECT idStudent FROM Student WHERE studentName = \"" + studentName + "\"";
+        System.out.println("La Sentencia fue =" + query);
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+        try {
+            if (rs.next()) {
+                result = rs.getString("idStudent");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOStudent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public String GetIdProfessor(String idStudent) {
+
+        String result = "No se pudo realizar la consulta";
+        String query = "SELECT idProfessor FROM Student WHERE idStudent = \"" + idStudent + "\"";
+        System.out.println("La Sentencia fue =" + query);
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+        try {
+            if (rs.next()) {
+                result = rs.getString("idProfessor");
+            } else {
+                result = "Cero resultados";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOStudent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 }

@@ -25,7 +25,7 @@ public class DAOTag {
 
     public String registryTag(String nombreTag, String professor) {
 
-        String resultado = "El registro no se pudo realizar";
+        String result = "El registro no se pudo realizar la Operación";
         String idProfessor;
 
         DAOProfessor DAOp = new DAOProfessor();
@@ -41,33 +41,35 @@ public class DAOTag {
             System.out.println("RESULT SET = " + rs);
 
             if (rs != 0) {
-                resultado = "Registro Completo";
+                result = "Registro Completo";
             }
         }
-        return resultado;
+        return result;
     }
 
     public String getIdTag(String tagName) {
 
-        String resultado = null;
+        String result = "No se pudo realizar la Consulta";
         String query = "SELECT * FROM Tag WHERE tag = '" + tagName + "'";
 
-        try {
-            DbConnection db = new DbConnection();
-            ResultSet rs = db.runSqlStatement(query);
 
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+        try {
             if (rs.next()) {
-                resultado = rs.getString("idTag");
+                result = rs.getString("idTag");
+            } else {
+                result = "Cero resultados";
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return resultado;
+        return result;
     }
-    
+
     public String getTag(String idProfessor) {
 
-        String resultado = null;
+        String result = "No se pudo realizar la Consulta";
         String query = "SELECT tag FROM Tag WHERE idProfessor = \"" + idProfessor + "\"";
 
         DbConnection db = new DbConnection();
@@ -75,15 +77,17 @@ public class DAOTag {
 
         try {
             if (rs.next()) {
-                resultado = rs.getString("tag");
-              
-                while(rs.next()) {
-                  
-                    resultado = resultado + ","+rs.getString("tag");
-                    
-                    
+                result = rs.getString("tag");
+
+                while (rs.next()) {
+
+                    result = result + "," + rs.getString("tag");
+
+
                 }
-                System.out.println("El resultado fue : "+ resultado);
+                System.out.println("El resultado fue : " + result);
+            } else {
+                result = "Cero resultados";
             }
 
 
@@ -91,6 +95,6 @@ public class DAOTag {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return resultado;
+        return result;
     }
 }

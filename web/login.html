@@ -9,55 +9,31 @@
                 // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
                 xmlhttp = new XMLHttpRequest();
             }
-            
+            function hello(){
+                alert("Oeeeeee");
+            }
             function callWS() {
                 init();
                 var user = document.getElementById("user");
                 var pass = document.getElementById("pass");
-                var prof = document.getElementById("professor");
-                if (prof.checked) {
-                    var url = "http://armachinep.j.layershift.co.uk/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
-                    //var url = "http://localhost:8080/ArMachineProject/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
-                    xmlhttp.open('GET',url,true);
-                    xmlhttp.setRequestHeader("Content-Type", "text/plain");
-                    xmlhttp.send(null);
-                    xmlhttp.onreadystatechange = function() {
+                var url = "http://armachinep.jelastic.servint.net/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
 
-                        if (xmlhttp.readyState == 4) {
-                            if ( xmlhttp.status == 200) {
-                                if( xmlhttp.responseText == "Invalid Student" ){
-                                    alert( xmlhttp.responseText );
-                                }else{
-                                    //window.location.replace("http://localhost:8080/ArMachineProject/professorMenu.html");
-                                    window.location.replace("/professorMenu.html");
-                                }
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "Invalid Student" ){
+                                alert( xmlhttp.responseText );
                             }else{
-                                alert("Error code ->" + xmlhttp.status);
+                                alert("Welcome!! " + xmlhttp.responseText);
                             }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
                         }
-                    };
-                }else{
-                    //var url = "http://localhost:8080/ArMachineProject/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
-                    var url = "http://armachinep.j.layershift.co.uk/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
-                    xmlhttp.open('GET',url,true);
-                    xmlhttp.setRequestHeader("Content-Type", "text/plain");
-                    xmlhttp.send(null);
-                    xmlhttp.onreadystatechange = function() {
-
-                        if (xmlhttp.readyState == 4) {
-                            if ( xmlhttp.status == 200) {
-                                if( xmlhttp.responseText == "Invalid Student" ){
-                                    alert( xmlhttp.responseText );
-                                }else{
-                                    //window.location.replace("http://localhost:8080/ArMachineProject/student.html");
-                                    window.location.replace("/student.html");
-                                }
-                            }else{
-                                alert("Error code ->" + xmlhttp.status);
-                            }
-                        }
-                    };
-                }
+                    }
+                };
             }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -69,6 +45,7 @@
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
+
             </div>
 
             <div id="menu">
@@ -81,18 +58,15 @@
             </div> 
 
             <div class="title" align="center">Login</div>
-
+                
             <div class="left_content">
                 <p><div align="right">Usuario: </div></p>
                 <p><div align="right">Contraseña: </div></p>
-                <p><div align="right">Profesor </div></p>
             </div>
-
+                
             <div class="right_content">
-                <p><input id="user" name="user"/></p>
-                <p><input id="pass" type="password" name="pass" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
-                <p><input id="professor" type="checkbox" name="professor"/></p>
-                <p></p>
+                <p><input id="user" type="nombreUsuario" name="usuario"/></p>
+                <p><input id="pass" type="password" name="contraseña" onkeydown="if (event.keyCode == 13) document.getElementById('btn').click()"/></p>
             </div>
 
             <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>

@@ -28,7 +28,7 @@ import javax.ws.rs.QueryParam;
 public class GetProfessor {
 
     @GET
-    public String Registry() {
+    public String GetProfessor() {
         String rst;
 
         DAOProfessor DAOp = new DAOProfessor();

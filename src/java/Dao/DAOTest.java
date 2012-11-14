@@ -20,12 +20,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 public class DAOTest {
 
     public String registryTest(String idProfessor, String testName, String testDescription, String testDate) {
 
-        String resultado = "El Registro no se pudo realizar";
+        String resultado = "No se pudo realizar la Operación";
         String query = "INSERT INTO Test(idProfessor, nameTest,descriptionTest,dateTest) VALUES (\"" + idProfessor + "\",\"" + testName + "\",\"" + testDescription + "\",\"" + testDate + "\")";
         System.out.println("La Sentencia es : " + query);
 
@@ -37,34 +40,63 @@ public class DAOTest {
         }
         return resultado;
     }
-    
-    public String getTestNames(String idProfessor){
-        
-        String resultado = null;
-        String query = "SELECT nameTest FROM Test WHERE idProfessor = \""+idProfessor+"\"";
-       
-        DbConnection db = new DbConnection();
-        ResultSet rs = db.runSqlStatement(query);
 
+    public String getIdtest(String testName) {
+
+        String result = "No se pudo realizar la Consulta";
+
+        String query = "SELECT idTest FROM Test WHERE nameTest = \"" + testName + "\"";
+        System.out.println("La Sentencia es : " + query);
         try {
+
+            DbConnection db = new DbConnection();
+            ResultSet rs = db.runSqlStatement(query);
+
             if (rs.next()) {
-                resultado = rs.getString("nameTest");
-              
-                while(rs.next()) {
-                  
-                    resultado = resultado + ","+rs.getString("nameTest");
-                    
-                    
-                }
-                System.out.println("El resultado fue : "+ resultado);
+
+                result = rs.getString("idTest");
+            } else {
+                result = "Cero resultados";
             }
 
 
         } catch (SQLException ex) {
+            Logger.getLogger(DAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public String getTestNames(String idProfessor) {
+
+        String result = "No se pudo realizar la Consulta";
+        String query = "SELECT nameTest, idTest FROM Test WHERE idProfessor = \"" + idProfessor + "\"";
+        JSONObject js = new JSONObject();
+        JSONArray idTest = new JSONArray();
+        JSONArray nameTest = new JSONArray();
+
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+
+        try {
+            if(!rs.isBeforeFirst()){
+                result = "Cero resultados";
+                return result;
+            }
+            while (rs.next()) {
+                nameTest.put(rs.getString("nameTest"));
+                idTest.put(rs.getString("idTest"));
+            }
+
+            js.put("nameTest", nameTest);
+            js.put("idTest", idTest);
+
+            result = js.toString();
+
+        } catch (JSONException ex) {
+            Logger.getLogger(DAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        return resultado;
-    }    
+        return result;
+    }
 }

@@ -28,20 +28,22 @@ public class DAOProfessor {
     String professorEmail;
     String professorUser;
     String professorPassword;
-    int professorId;
+    String professorId;
 
     public String LogInProfessor(String usr, String passw) {
         String resultado = null;
-        try {
 
-            String logIn = "SELECT professorName, professorLastName FROM Professor WHERE professorUser = '" + usr + "' AND professorPassword = '" + passw + "'";
-            System.out.println("La sentencia es : " + logIn);
-            DbConnection db = new DbConnection();
-            ResultSet rs = db.runSqlStatement(logIn);
+
+        String logIn = "SELECT professorName, professorLastName, idProfessor FROM Professor WHERE professorUser = '" + usr + "' AND professorPassword = '" + passw + "'";
+        System.out.println("La sentencia es : " + logIn);
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(logIn);
+        try {
             if (rs.next()) {
 
                 professorName = rs.getString("professorName");
                 professorLastName = rs.getString("professorLastname");
+                professorId = rs.getString("idProfessor");
                 resultado = professorName + " " + professorLastName;
 
                 return resultado;
@@ -53,7 +55,7 @@ public class DAOProfessor {
     }
 
     public String registryProfessor(String name, String user, String lastName, String email, String password) {
-        String resultado = "No se pudo ejecutar el registro";
+        String resultado = "No se pudo realizar la Operación";
 
         String query = "INSERT INTO Professor(professorName, professorUser, professorLastName, professorEmail, professorPassword) VALUES (\"" + name + "\",\"" + user + "\",\"" + lastName + "\",\"" + email + "\",\"" + password + "\")";
         System.out.println("La sentencia es : " + query);
@@ -74,10 +76,11 @@ public class DAOProfessor {
         String resultado = null;
         String query = "SELECT * FROM Professor WHERE professorName = '" + name + "'";
 
-        try {
 
-            DbConnection db = new DbConnection();
-            ResultSet rs = db.runSqlStatement(query);
+
+        DbConnection db = new DbConnection();
+        ResultSet rs = db.runSqlStatement(query);
+        try {
             if (rs.next()) {
 
                 resultado = rs.getString("idProfessor");
@@ -87,10 +90,10 @@ public class DAOProfessor {
         }
         return resultado;
     }
-    
+
     public String getProfessors() {
 
-        String resultado = "No se pudo realizar la busqueda";
+        String result = "No se pudo realizar la Consulta";
         String query = "SELECT * FROM Professor";
 
         DbConnection db = new DbConnection();
@@ -98,15 +101,17 @@ public class DAOProfessor {
 
         try {
             if (rs.next()) {
-                resultado = rs.getString("professorName");
+                result = rs.getString("professorName");
 
                 while (rs.next()) {
 
-                    resultado = resultado + "," + rs.getString("professorName");
+                    result = result + "," + rs.getString("professorName");
 
 
                 }
-                System.out.println("El resultado fue : " + resultado);
+                System.out.println("El resultado fue : " + result);
+            } else {
+                result = "Cero resultados";
             }
 
 
@@ -117,6 +122,6 @@ public class DAOProfessor {
 
 
 
-        return resultado;
-    }    
+        return result;
+    }
 }

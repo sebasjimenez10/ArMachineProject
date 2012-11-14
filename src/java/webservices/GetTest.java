@@ -15,7 +15,6 @@
  */
 package webservices;
 
-import Dao.DAOTag;
 import Dao.DAOTest;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;

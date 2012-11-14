@@ -6,13 +6,6 @@
  * 
  * Name: Ar-Machine Project
  */
-package connection;
-
-import java.io.IOException;
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Erika Gomez
@@ -20,6 +13,13 @@ import java.util.logging.Logger;
  * @author David Sttivend
  * @author Ernesto Quintero
  */
+package connection;
+
+import java.io.IOException;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class DbConnection {
 
     public DbConnection() {
@@ -29,8 +29,8 @@ public class DbConnection {
 
         Connection connection;
 
-        String host = "jdbc:mysql://mysql-armachinep.j.layershift.co.uk/Armachine";
-        String username = "root";
+        String host = "jdbc:mysql://ec2-23-21-211-172.compute-1.amazonaws.com:3306/armachinep";
+        String username = "aroot";
         String password = "armachinep";
         String driver = "com.mysql.jdbc.Driver";
 
@@ -38,15 +38,16 @@ public class DbConnection {
         System.out.println("DRIVER: " + driver);
         connection = DriverManager.getConnection(host, username, password);
         System.out.println("CONNECTION: " + connection);
+
         return connection;
     }
 
     public ResultSet runSqlStatement(String sentencia) {
-        ResultSet sqlQuery = null;
+        ResultSet a = null;
         try {
             Statement statement = getConection().createStatement();
-            sqlQuery = statement.executeQuery(sentencia);
-            return sqlQuery;
+            a = statement.executeQuery(sentencia);
+            return a;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -54,14 +55,15 @@ public class DbConnection {
         } catch (SQLException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return sqlQuery;
+        return a;
     }
-    
+
     public int runSqlUpdate(String query) {
         int rst = 0;
         try {
             Statement statement = getConection().createStatement();
             rst = statement.executeUpdate(query);
+            System.out.println("El Update devolvio: " + rst);
             return rst;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
