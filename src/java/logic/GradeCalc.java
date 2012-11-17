@@ -25,7 +25,7 @@ public class GradeCalc {
         try {
             for (int i = 0; i < answer.length(); i++) {
 
-                if (answer.get(i).equals(correct.get(i))) {
+                if (((char)answer.getInt(i) + "").equals(correct.getString(i))) {
                     System.out.println("ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                     contCorrectas++;
                 }

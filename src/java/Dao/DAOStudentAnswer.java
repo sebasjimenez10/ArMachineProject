@@ -24,6 +24,7 @@ public class DAOStudentAnswer {
 
         JSONArray Corrects = null;
         String query;
+        String testName;
         String idTest;
         String idStudent;
         int rs;
@@ -35,13 +36,14 @@ public class DAOStudentAnswer {
             JSONArray idQuestion = convert.getJSONArray("questions");
             JSONArray answer = convert.getJSONArray("answers");
 
+            testName = convert.getString("testName");
+            idTest = new DAOTest().getIdtest(testName);
 
-            idTest = convert.getString("idTest");
             idStudent = convert.getString("idStudent");
 
             for (int i = 0; i < idQuestion.length(); i++) {
 
-                query = "INSERT INTO StudentAnswer( StudentAnswer.idTestQuestion, StudentAnswer.idStudent, StudentAnswer.idTest, StudentAnswer.answer) VALUES (\"" + idQuestion.get(i) + "\",\"" + idStudent + "\",\"" + idTest + "\",\"" + answer.get(i) + "\")";
+                query = "INSERT INTO StudentAnswer( StudentAnswer.idTestQuestion, StudentAnswer.idStudent, StudentAnswer.idTest, StudentAnswer.answer) VALUES (\"" + Integer.parseInt(idQuestion.getString(i)) + "\",\"" + idStudent + "\",\"" + idTest + "\",\"" + (char)answer.getInt(i) + "\")";
                 rs = DbConnection.runSqlUpdate(query);
                 if (rs == 0) {
                     error = true;
@@ -63,7 +65,6 @@ public class DAOStudentAnswer {
                     resultGrade = DAOst.UpdateStudentTest(idStudent, idTest, grade);
 
                     if (resultGrade.equals("No se pudo realizar la Operacion")) {
-
                         error = true;
                     }
 
@@ -72,7 +73,7 @@ public class DAOStudentAnswer {
             }
 
             result = "Registro Completo";
-            if (error == true) {
+            if (error) {
                 result = "Registro con Errores";
             }
 

@@ -222,6 +222,7 @@ public class DAOStudentTest {
         
         String result = "No se pudo realizar la Operacion";
         String query = "UPDATE StudentTest SET idState= 1, grade=\"" + grade + "\" WHERE idStudent = " + idStudent + " AND idTest = \"" + idTest + "\"";
+        System.out.println( query );
         int rs = DbConnection.runSqlUpdate(query);
         if (rs != 0) {
             result = "Registro Completo";
