@@ -116,6 +116,14 @@ margin:15px 0 0 0;
 float:left;
 background:url(images/tab_bg.jpg) no-repeat center;
 }
+.tab_bg1{
+width:880px;
+height:370px;
+clear:both;
+margin:15px 0 0 0;
+float:left;
+background:url(images/tab_bg1.jpg) no-repeat center;
+}
 .tab_left{
 width:225px;
 float:left;
@@ -174,10 +182,20 @@ width:400px;
 float:left;
 padding:10px 0 0 20px;
 }
+.left_content1{
+width:400px;
+float:left;
+padding:40px 0 0 20px;
+}
 .right_content{
 width:400px;
 float:left;
 padding:10px 0 0 30px;
+}
+.right_content1{
+width:400px;
+float:right;
+padding:0px 0 0 30px;
 }
 .title{
 color:#313e40;
@@ -214,6 +232,12 @@ img.arrow{
 width:23px;
 float:left;
 padding:5px 0 0 0px;
+}
+.links{
+text-align:center;
+color: #000;
+font-size:13px;
+
 }
 
 

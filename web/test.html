@@ -17,9 +17,14 @@
                 //var prof = document.getgetElementById("prof");
                 var prof = "2";
                 var date = "2012/10/16";
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
-                //var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
                 //alert(date);
+                
+                if(nameTest.value ==0 || description.value ==0){
+                    alert("Debe diligenciar correctamente el formulario"); 
+                }
+                
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -31,7 +36,8 @@
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
-                                window.location.replace("abc");
+                                nameTest.value= "";
+                                description.value="";
                             }
                         }else{
                             alert("Error code ->" + xmlhttp.status);

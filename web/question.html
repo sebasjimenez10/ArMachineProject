@@ -10,6 +10,39 @@
                 xmlhttp = new XMLHttpRequest();
             }
             
+            function getTags(){
+                init();
+                var tagComboBox = document.getElementById("tag");
+                var idProfessor = "2";
+                var list;
+                var url = "http://localhost:8080/ArMachineProject/resources/GetTag?idProfessor=" + idProfessor;
+                //var url = "http://armachinep.j.layershift.co.uk/resources/GetTag?";
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText.split(",");
+                                
+                                var n = 0;
+                                while ( n < list.length ){
+                                    tagComboBox.options[tagComboBox.options.length] = new Option(list[n], list[n]);
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            
             function callWS() {
                 init();
                 var sentence = document.getElementById("sentence");
@@ -19,10 +52,14 @@
                 var optionD = document.getElementById("optionD");
                 var correct = document.getElementById("correct");
                 var idProfessor = "2";
-                //var tag = document.getElementById("tag");
-                var tag = "Vacio";
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag;
-                //var url = "http://localhost:8080/ArMachineProject/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag;
+                var tag = document.getElementById("tag");
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag.value;
+                
+                if(sentence.value ==0 || optionA.value ==0 || optionB.value ==0 || optionC.value ==0 || optionD.value ==0){
+                    alert("Debe diligenciar correctamente el formulario"); 
+                }
+                
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -34,7 +71,11 @@
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
-                                window.location.replace("abc");
+                                sentence.value ="";
+                                optionA.value =""; 
+                                optionB.value =""; 
+                                optionC.value =""; 
+                                optionD.value ="";
                             }
                         }else{
                             alert("Error code ->" + xmlhttp.status);
@@ -49,7 +90,7 @@
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body>
+    <body onload="getTags();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>

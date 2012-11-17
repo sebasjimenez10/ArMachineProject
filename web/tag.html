@@ -13,9 +13,14 @@
             function callWS() {
                 init();
                 var nameTag = document.getElementById("nameTag");
-                var nameProfesor = "Dr Jimenez";
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTag?TagName=" + nameTag.value +"&ProfessorName=" + nameProfesor;
-                //var url = "http://localhost:8080/ArMachineProject/resources/RegistryTag?TagName=" + nameTag.value +"&ProfessorName=" + nameProfesor;
+                var idProfesor = "Dr Jimenez";
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTag?TagName=" + nameTag.value +"&IdProfessor=" + idProfesor;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTag?TagName=" + nameTag.value +"&IdProfessor=" + idProfesor;
+                
+                if(nameTag.value ==0){
+                    alert("Debe diligenciar correctamente el formulario"); 
+                }
+                
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -23,11 +28,11 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "Registry tag fail" ){
+                            if( xmlhttp.responseText == "El registro no se pudo realizar la Operación" ){
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
-                                window.location.replace("abc");
+                                nameTag.value="";
                             }
                         }else{
                             alert("Error code ->" + xmlhttp.status);

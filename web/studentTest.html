@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
+        <script language="JavaScript">
+            
+
+            function getTest(){
+                init();
+                var profComboBox = document.getElementById("prof");
+                var idStudent = "";
+                var list;
+                var url = "http://localhost:8080/ArMachineProject/resources/GetCompleteTest?idStudent="+ idStudent;
+                //var url = "http://armachinep.j.layershift.co.uk/resources/GetCompleteTest?";
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "Registry fail" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText.split(",");
+                                
+                                var n = 0;
+                                while ( n < list.length ){
+                                    profComboBox.options[profComboBox.options.length] = new Option(list[n], list[n]);
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <!--[if IE 6]>
+                <script type="text/javascript" src="unitpngfix.js"></script>
+        <![endif]--> 
+    </head>
+    <body onload="getTest();">
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
+
+            </div>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                </ul>
+            </div> 
+
+            <div class="title" align="center">Examenes Completados </div>
+            <p></p>
+
+            
+           
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>
+                    <a href="#">Contacto</a>          
+                </div>
+
+
+            </div> 
+
+
+
+        </div>
+    </body>
+</html>

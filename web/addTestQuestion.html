@@ -10,11 +10,91 @@
                 xmlhttp = new XMLHttpRequest();
             }
             
+            function getTest(){
+                init();
+                var nameTestComboBox = document.getElementById("nameTest");
+                var idProfessor = "2";
+                var list;
+                var url = "http://localhost:8080/ArMachineProject/resources/GetTest?idProfessor=" + idProfessor;
+                //var url = "http://armachinep.j.layershift.co.uk/resources/GetTag?";
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText;
+                                var obj = eval ("(" + list + ")");
+                                var n = 0;
+                                while ( n < obj.nameTest.length ){
+                                    nameTestComboBox.options[nameTestComboBox.options.length] = new Option(obj.nameTest[n], obj.idTest[n]);
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            
+            function getQuestion(){
+                init();
+                var idProfessor = "2";
+                var list;
+                var url = "http://localhost:8080/ArMachineProject/resources/GetQuestion?idProfessor=" + idProfessor;
+                //var url = "http://armachinep.j.layershift.co.uk/resources/GetTag?";
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText.split(",");
+                                
+                                var n = 0;   
+                                while ( n < list.length ){
+                                    document.getElementById('table').innerHTML += "<table>";
+                                    document.getElementById('table').innerHTML += "<tr>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += '<input name=questionSentence type=checkbox value=p[n]  />'+n;
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += list[n];
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "</tr>";
+                                    document.getElementById('table').innerHTML += "</table>";
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            
+            
             function callWS() {
                 init();
                 var questionSentence = document.getElementById("questionSentence");
                 var nameTest = document.getElementById("nameTest");
-                var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
+                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
+                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
+                if(questionSentence.value ==0 || nameTest.value ==0){
+                    alert("Debe diligenciar correctamente el formulario"); 
+                }
+                
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -40,54 +120,46 @@
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body>
-            <div class="wrap">
-                <div class="header">
-                    <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
-                </div>
-
-                <div id="menu">
-                    <ul>                                                                       
-                        <li class="selected"><a href="index.html">Inicio</a></li>
-                        <li><a href="register.html">Registro</a></li>
-                        <li><a href="#">Ayuda</a></li>                                                                     
-                        <li><a href="login.html">Entrar</a></li>                                                                     			
-                    </ul>
-                </div> 
-
-                <div class="title" align="center">Agregar pregunta a un test</div>
-
-                <div class="left_content">
-                    <p><div align="right">Nombre test: </div></p>
-                    <p><div align="right">Preguntas: </div></p>
-                </div>
-
-                <div class="right_content">
-                    <p><select id="nameTest" name="nameTest" size=1> </select></p>
-                    <table>
-                        <tr>
-                            <td>Select</td>
-                            <td>pregunta</td>
-                        </tr>
-                        <tr>
-                            <td><input name="questionSentence" type="checkbox" value="p1"  /></td>
-                            <td>p1</td>
-                        </tr>
-                    </table>
-                    <p></p>
-                </div>
-
-                <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
-
-                <div id="footer">
-                    <div class="footer_links">                      
-                        <a href="index.html">Inicio</a>
-                        <a href="register.html">Registro</a>
-                        <a href="#">Ayuda</a>
-                        <a href="login.html">Entrar</a>
-                        <a href="#">Contacto</a>          
-                    </div>   
-                </div> 
+    <body onload="getTest();">
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
             </div>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                </ul>
+            </div> 
+
+            <div class="title" align="center">Agregar pregunta a un test</div>
+
+            <div class="left_content">
+                <p><div align="right">Nombre test: </div></p>
+                <p><div align="right">Preguntas: </div></p>
+            </div>
+
+            <div class="right_content">
+                <p><select id="nameTest" name="nameTest" size=1> </select></p>
+                <p><div id="table"></div> </p>
+                <p></p>
+            </div>
+            <p></p>
+            <div align="center"><button id="btn" onclick="getQuestion()">Mostrar preguntas</button></div>
+            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>
+                    <a href="#">Contacto</a>          
+                </div>   
+            </div> 
+        </div>
     </body>
 </html>
