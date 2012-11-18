@@ -12,7 +12,7 @@
             
             function getEstudents(){
                 init();
-                alert("message");
+
                 var studentComboBox = document.getElementById("student");
                 var idProfessor = "2";
                 var list;
@@ -28,26 +28,26 @@
                             if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
                                 alert( xmlhttp.responseText );
                             }else{
+                                
                                 list = xmlhttp.responseText;
                                 var obj = eval ("(" + list + ")");
-                                alert(obj.value);
                                 var n = 0;
                                 while ( n < obj.nameStudent.length ){
                                     studentComboBox.options[studentComboBox.options.length] = new Option(obj.nameStudent[n], obj.idStudent[n]);
                                     n += 1;
                                 }
                                     
-                            }   
+                                }   
                             
                                 
                         
-                        }else{
-                            alert("Error code ->" + xmlhttp.status);
-                        }
+                    }else{
+                        alert("Error code ->" + xmlhttp.status);
                     }
-                };
+                }
+            };
                 
-            }
+        }
         </script>
 
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -77,11 +77,12 @@
 
             <div class="right_content">
                 <p><select id="student" name="student" size=1> </select></p>
+                <p><div id="table"></div> </p>
                 <p></p>
             </div>
-
+            
             <p></p>
-            <div align="center"><button id="btn" onclick="prueba();">Aceptar</button></div>
+            <div align="center"><button id="btn" onclick="prueba();">Ingresar</button></div>
 
             <div id="footer">
                 <div class="footer_links">                      
