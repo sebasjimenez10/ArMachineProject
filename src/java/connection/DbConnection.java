@@ -29,20 +29,16 @@ public class DbConnection {
 
     public static Connection getConection() throws IOException, ClassNotFoundException, SQLException {
 
-        if (connection == null) {
+        String host = "jdbc:mysql://ec2-23-21-211-172.compute-1.amazonaws.com:3306/armachinep";
+        String username = "aroot";
+        String password = "armachinep";
 
-            String host = "jdbc:mysql://ec2-23-21-211-172.compute-1.amazonaws.com:3306/armachinep";
-            String username = "aroot";
-            String password = "armachinep";
-            
-            String driver = "com.mysql.jdbc.Driver";
+        String driver = "com.mysql.jdbc.Driver";
 
-            Class.forName(driver);
-            System.out.println("DRIVER: " + driver);
-            connection = DriverManager.getConnection(host, username, password);
-            System.out.println("CONNECTION: " + connection);
-
-        }
+        Class.forName(driver);
+        System.out.println("DRIVER: " + driver);
+        connection = DriverManager.getConnection(host, username, password);
+        System.out.println("CONNECTION: " + connection);
 
         return connection;
     }
@@ -50,8 +46,10 @@ public class DbConnection {
     public static ResultSet runSqlStatement(String sentencia) {
         ResultSet a = null;
         try {
-            Statement statement = getConection().createStatement();
+            Connection conn = getConection();
+            Statement statement = conn.createStatement();
             a = statement.executeQuery(sentencia);
+            conn.close();
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -65,9 +63,11 @@ public class DbConnection {
     public static int runSqlUpdate(String query) {
         int rst = 0;
         try {
-            Statement statement = getConection().createStatement();
+            Connection conn = getConection();
+            Statement statement = conn.createStatement();
             rst = statement.executeUpdate(query);
             System.out.println("El Update devolvio: " + rst);
+            conn.close();
             return rst;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
