@@ -49,7 +49,6 @@ public class DbConnection {
             Connection conn = getConection();
             Statement statement = conn.createStatement();
             a = statement.executeQuery(sentencia);
-            conn.close();
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -67,7 +66,6 @@ public class DbConnection {
             Statement statement = conn.createStatement();
             rst = statement.executeUpdate(query);
             System.out.println("El Update devolvio: " + rst);
-            conn.close();
             return rst;
         } catch (IOException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
