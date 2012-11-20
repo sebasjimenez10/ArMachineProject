@@ -28,7 +28,7 @@ public class DAOProfessor {
     String professorEmail;
     String professorUser;
     String professorPassword;
-    String professorId;
+    int professorId;
 
     public String LogInProfessor(String usr, String passw) {
         String resultado = null;
@@ -44,8 +44,8 @@ public class DAOProfessor {
 
                 professorName = rs.getString("professorName");
                 professorLastName = rs.getString("professorLastname");
-                professorId = rs.getString("idProfessor");
-                resultado = professorName + " " + professorLastName;
+                professorId = rs.getInt("idProfessor");
+                resultado = professorName + " " + professorLastName + " " + professorId;
 
                 return resultado;
             }
