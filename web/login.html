@@ -16,17 +16,16 @@
                 var user = document.getElementById("user");
                 var pass = document.getElementById("pass");
                 var prof = document.getElementById("professor"); 
-
-                createCookie("user", user, 5);
-                createCookie("pass", pass, 5);
+                var id;
+                setCookie("username",user.value,365);
+                setCookie("password",pass.value,365);
                
                 if(user.value ==0 || pass.value ==0){
                     alert("Debe diligenciar correctamente el formulario"); 
                 }
                 
                 if (prof.checked) {
-                    //var url = "http://armachinep.j.layershift.co.uk/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
-                    var url = "http://localhost:8080/ArMachineProject/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
+                    var url = "http://armachinep.armachine.cloudbees.net/resources/ProfessorLogIn?Professor=" + user.value + "&Password=" + pass.value;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -34,10 +33,14 @@
 
                         if (xmlhttp.readyState == 4) {
                             if ( xmlhttp.status == 200) {
-                                if( xmlhttp.responseText == "No se pudo realizar la Operación" ){
+                                if( xmlhttp.responseText == "Invalid Professor" ){
                                     alert( xmlhttp.responseText );
                                 }else{
-                                    window.location.replace("http://localhost:8080/ArMachineProject/professorMenu.html");
+                                    var result= xmlhttp.responseText.split(" ");
+                                    var n= result.length-1
+                                    id= result[n].toString();
+                                    setCookie("id",id,365);
+                                    window.location.replace("http://armachinep.armachine.cloudbees.net/professorMenu.html");
                                     //window.location.replace("professorMenu.html");
                                 }
                             }else{
@@ -46,8 +49,8 @@
                         }
                     };
                 }else{
-                    var url = "http://localhost:8080/ArMachineProject/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
-                    //var url = "http://armachinep.j.layershift.co.uk/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
+                    var url = "http://armachinep.armachine.cloudbees.net/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
+                    //var url = "http://localhost:8080/ArMachineProject/resources/StudentLogIn?Student=" + user.value + "&Password=" + pass.value;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -55,11 +58,15 @@
 
                         if (xmlhttp.readyState == 4) {
                             if ( xmlhttp.status == 200) {
-                                if( xmlhttp.responseText == "No se pudo realizar la Operación" ){
+                                if( xmlhttp.responseText == "Invalid Student" ){
                                     alert( xmlhttp.responseText );
                                 }else{
-                                    window.location.replace("http://localhost:8080/ArMachineProject/student.html?");
-                                    //window.location.replace("/student.html");
+                                    var result= xmlhttp.responseText.split(" ");
+                                    
+                                    id= result[2].toString();
+                                    setCookie("id",id,365);
+                                    
+                                    window.location.replace("http://armachinep.armachine.cloudbees.net/student.html");
                                 }
                             }else{
                                 alert("Error code ->" + xmlhttp.status);

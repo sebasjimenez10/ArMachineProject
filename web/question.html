@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
         <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
         <script language="JavaScript">
             var xmlhttp;
             function init() {
@@ -13,10 +14,9 @@
             function getTags(){
                 init();
                 var tagComboBox = document.getElementById("tag");
-                var idProfessor = "2";
+                var idProfessor = getId();
                 var list;
-                var url = "http://localhost:8080/ArMachineProject/resources/GetTag?idProfessor=" + idProfessor;
-                //var url = "http://armachinep.j.layershift.co.uk/resources/GetTag?";
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetTag?idProfessor=" + idProfessor;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -51,10 +51,9 @@
                 var optionC = document.getElementById("optionC");
                 var optionD = document.getElementById("optionD");
                 var correct = document.getElementById("correct");
-                var idProfessor = "2";
+                var idProfessor = getId();
                 var tag = document.getElementById("tag");
-                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag;
-                var url = "http://localhost:8080/ArMachineProject/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag.value;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryQuestion?Sentence=" + sentence.value + "&OpcionA=" + optionA.value + "&OpcionB=" + optionB.value + "&OpcionC=" + optionC.value + "&OpcionD=" + optionD.value + "&Correct=" + correct.value + "&IdProfessor=" + idProfessor +  "&TagName=" + tag.value;
                 
                 if(sentence.value ==0 || optionA.value ==0 || optionB.value ==0 || optionC.value ==0 || optionD.value ==0){
                     alert("Debe diligenciar correctamente el formulario"); 
@@ -83,14 +82,31 @@
                     }
                 };
             }
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+            function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
             
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id");
+            }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <!--[if IE 6]>
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body onload="getTags();">
+    <body onload="checkCookie();getTags();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -102,9 +118,19 @@
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
                     <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                 </ul>
             </div> 
 
+            <font color="white">
+            <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
+            <p></p>
+            </font>
             <div class="title" align="center">Agregar Pregunta</div>
 
             <div class="left_content">

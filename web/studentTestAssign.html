@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
+        <script language="JavaScript">
+            var xmlhttp;
+            function init() {
+                // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
+                xmlhttp = new XMLHttpRequest();
+            }
+
+            function GetAssignTest(){
+                init();
+                var idStudent = getId();
+                var list;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetAssignTest?idStudent="+ idStudent;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText.split(",");
+                                
+                                var n = 0;   
+                                while ( n < list.length ){
+                                    document.getElementById('table').innerHTML += "<table>";
+                                    document.getElementById('table').innerHTML += "<tr>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += "Nombre Test: ";
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += list[n];
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "</tr>";
+                                    document.getElementById('table').innerHTML += "</table>";
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };   
+            }
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+             function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
+            
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id");
+            }
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <!--[if IE 6]>
+                <script type="text/javascript" src="unitpngfix.js"></script>
+        <![endif]--> 
+    </head>
+    <body onload="checkCookie();GetAssignTest();">
+        <div class="wrap">
+            <div class="header">
+                <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
+
+            </div>
+
+            <div id="menu">
+                <ul>                                                                       
+                    <li class="selected"><a href="index.html">Inicio</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li><a href="#">Ayuda</a></li>                                                                     
+                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
+                </ul>
+            </div> 
+
+            <font color="white">
+            <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
+            <p></p>
+            </font>
+            <div class="title" align="center">Examenes Asignados </div>
+            <p></p>
+            <div class="title" align="center" id="table"></div>
+
+            
+           
+            <div id="footer">
+                <div class="footer_links">                      
+                    <a href="index.html">Inicio</a>
+                    <a href="register.html">Registro</a>
+                    <a href="#">Ayuda</a>
+                    <a href="login.html">Entrar</a>        
+                </div>
+
+
+            </div> 
+
+
+
+        </div>
+    </body>
+</html>

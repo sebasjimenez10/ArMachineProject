@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
         <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
         <script language="JavaScript">
             var xmlhttp;
             function init() {
@@ -13,9 +14,8 @@
             function callWS() {
                 init();
                 var nameTag = document.getElementById("nameTag");
-                var idProfesor = "Dr Jimenez";
-                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTag?TagName=" + nameTag.value +"&IdProfessor=" + idProfesor;
-                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTag?TagName=" + nameTag.value +"&IdProfessor=" + idProfesor;
+                var idProfesor = getId();
+                var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryTag?tagName=" + nameTag.value +"&IdProfessor=" + idProfesor;
                 
                 if(nameTag.value ==0){
                     alert("Debe diligenciar correctamente el formulario"); 
@@ -28,7 +28,7 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "El registro no se pudo realizar la Operación" ){
+                            if( xmlhttp.responseText == "No se pudo realizar la Operación" ){
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
@@ -41,13 +41,30 @@
                 };
             }
             
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+            function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
+            
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+            }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <!--[if IE 6]>
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body>
+    <body onload="checkCookie();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -58,10 +75,20 @@
                     <li class="selected"><a href="index.html">Inicio</a></li>
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="login.html">Entrar</a></li> 
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; </a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                 </ul>
             </div> 
-
+            
+            <font color="white">
+            <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
+            <p></p>
+            </font>
             <div class="title" align="center">Agregar Categoria</div>
 
             <div class="left_content">

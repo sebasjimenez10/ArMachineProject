@@ -23,25 +23,18 @@ import java.util.logging.Logger;
 
 public class DAOTag {
 
-    public String registryTag(String nombreTag, String professor) {
+    public String registryTag(String nombreTag, String idProfessor) {
 
-        String result = "El registro no se pudo realizar la Operación";
-        String idProfessor;
+        String result = "No se pudo realizar la Operación";
+        
+        String query = "INSERT INTO Tag(tag,idProfessor) VALUES (\"" + nombreTag + "\",\"" + idProfessor + "\")";
+        System.out.println("La Sentencia es : " + query);
 
-        DAOProfessor DAOp = new DAOProfessor();
-        idProfessor = DAOp.searchProfessor(professor);
+        int rs = DbConnection.runSqlUpdate(query);
+        System.out.println("RESULT SET = " + rs);
 
-        if (idProfessor != null) {
-
-            String query = "INSERT INTO Tag(tag,idProfessor) VALUES (\"" + nombreTag + "\",\"" + idProfessor + "\")";
-            System.out.println("La Sentencia es : " + query);
-
-            int rs = DbConnection.runSqlUpdate(query);
-            System.out.println("RESULT SET = " + rs);
-
-            if (rs != 0) {
-                result = "Registro Completo";
-            }
+        if (rs != 0) {
+            result = "Registro Completo";
         }
         return result;
     }

@@ -23,8 +23,7 @@
                 init();
                 var profComboBox = document.getElementById("prof");
                 var list;
-                var url = "http://localhost:8080/ArMachineProject/resources/GetProfessor?";
-                //var url = "http://armachinep.j.layershift.co.uk/resources/GetProfessor?";
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetProfessor?";
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -72,8 +71,7 @@
                         alert("Codigo de profesor inválido");
                         return;
                     }
-                    //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryProfessor?ProfessorName=" + name.value + "&ProfessorUser=" + user.value + "&ProfessorLastName=" + lastName.value + "&ProfessorEmail=" + email.value +"&ProfessorPassword=" + pass.value;
-                    var url = "http://localhost:8080/ArMachineProject/resources/RegistryProfessor?ProfessorName=" + name.value + "&ProfessorUser=" + user.value + "&ProfessorLastName=" + lastName.value + "&ProfessorEmail=" + email.value +"&ProfessorPassword=" + pass.value;
+                    var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryProfessor?ProfessorName=" + name.value + "&ProfessorUser=" + user.value + "&ProfessorLastName=" + lastName.value + "&ProfessorEmail=" + email.value +"&ProfessorPassword=" + pass.value;
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
                     xmlhttp.send(null);
@@ -85,7 +83,7 @@
                                     alert( xmlhttp.responseText );
                                 }else{
                                     alert("Welcome!! " + xmlhttp.responseText);
-                                    window.location.replace("http://localhost:8080/ArMachineProject/login.html");
+                                    window.location.replace("http://armachinep.armachine.cloudbees.net/login.html");
                                     //window.location.replace("/login.html");
                                 }
                             }else{
@@ -94,8 +92,7 @@
                         }
                     };
                 }else{
-                    //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryStudent?StudentName=" + name.value + "&StudentUser=" + user.value + "&StudentLastName=" + lastName.value + "&StudentEmail=" + email.value +"&StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
-                    var url = "http://localhost:8080/ArMachineProject/resources/RegistryStudent?StudentName=" + name.value + "&StudentUser=" + user.value + "&StudentLastName=" + lastName.value + "&StudentEmail=" + email.value +"&StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
+                    var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryStudent?StudentName=" + name.value + "&StudentUser=" + user.value + "&StudentLastName=" + lastName.value + "&StudentEmail=" + email.value +"&StudentPassword=" + pass.value + "&StudentProfessor="+ prof.value ;
                     //alert(url);
                     xmlhttp.open('GET',url,true);
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
@@ -108,8 +105,7 @@
                                     alert( xmlhttp.responseText );
                                 }else{
                                     alert("Welcome!! " + xmlhttp.responseText);
-                                    window.location.replace("http://localhost:8080/ArMachineProject/login.html");
-                                    //window.location.replace("login.html");
+                                    window.location.replace("http://armachinep.armachine.cloudbees.net/login.html");
                                 }
                             }else{
                                 alert("Error code ->" + xmlhttp.status);

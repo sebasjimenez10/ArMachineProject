@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
         <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
         <script language="JavaScript">
             var xmlhttp;
             function init() {
@@ -13,10 +14,9 @@
             function getTest(){
                 init();
                 var nameTestComboBox = document.getElementById("nameTest");
-                var idProfessor = "2";
+                var idProfessor = getId();
                 var list;
-                var url = "http://localhost:8080/ArMachineProject/resources/GetTest?idProfessor=" + idProfessor;
-                //var url = "http://armachinep.j.layershift.co.uk/resources/GetTag?";
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetTest?idProfessor=" + idProfessor;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -31,7 +31,7 @@
                                 var obj = eval ("(" + list + ")");
                                 var n = 0;
                                 while ( n < obj.nameTest.length ){
-                                    nameTestComboBox.options[nameTestComboBox.options.length] = new Option(obj.nameTest[n], obj.idTest[n]);
+                                    nameTestComboBox.options[nameTestComboBox.options.length] = new Option(obj.nameTest[n]);
                                     n += 1;
                                 }
                             }
@@ -45,10 +45,9 @@
             
             function getQuestion(){
                 init();
-                var idProfessor = "2";
+                var idProfessor = getId();
                 var list;
-                var url = "http://localhost:8080/ArMachineProject/resources/GetQuestion?idProfessor=" + idProfessor;
-                //var url = "http://armachinep.j.layershift.co.uk/resources/GetTag?";
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetQuestion?idProfessor=" + idProfessor;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -59,17 +58,21 @@
                             if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
                                 alert( xmlhttp.responseText );
                             }else{
-                                list = xmlhttp.responseText.split(",");
-                                
+                                list = xmlhttp.responseText;
+                               
+                                var obj = eval ("(" + list + ")");
+                               
                                 var n = 0;   
-                                while ( n < list.length ){
+                                while ( n < obj.sentence.length ){
+                                    var value= '"'+obj.sentence[n]+'"';
+                                    //alert(value);
                                     document.getElementById('table').innerHTML += "<table>";
                                     document.getElementById('table').innerHTML += "<tr>";
                                     document.getElementById('table').innerHTML += "<td>";
-                                    document.getElementById('table').innerHTML += '<input name=questionSentence type=checkbox value=p[n]  />'+n;
+                                    document.getElementById('table').innerHTML += '<input name=questionSentence id=questionSentence type=checkbox value='+value+'  />';
                                     document.getElementById('table').innerHTML += "</td>";
                                     document.getElementById('table').innerHTML += "<td>";
-                                    document.getElementById('table').innerHTML += list[n];
+                                    document.getElementById('table').innerHTML += obj.sentence[n];
                                     document.getElementById('table').innerHTML += "</td>";
                                     document.getElementById('table').innerHTML += "</tr>";
                                     document.getElementById('table').innerHTML += "</table>";
@@ -87,10 +90,16 @@
             
             function callWS() {
                 init();
-                var questionSentence = document.getElementById("questionSentence");
                 var nameTest = document.getElementById("nameTest");
-                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
-                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTestQuestion?questionSentence" + questionSentence.value + "&testName" + nameTest.value;
+                var questionSentence, vals = [], questionSentence =  document.forms['addForm']['questionSentence'];
+                for(var i=0,elm;elm = questionSentence[i];i++) {
+                    if(elm.checked) {
+                        vals.push(encodeURIComponent(elm.value));
+                    }
+                }
+                questionSentence = vals.join(',');
+                alert(questionSentence);
+                var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryTestQuestion?questionSentence=" + questionSentence + "&testName=" + nameTest.value;
                 if(questionSentence.value ==0 || nameTest.value ==0){
                     alert("Debe diligenciar correctamente el formulario"); 
                 }
@@ -102,7 +111,7 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "Registry question to test fail" ){
+                            if( xmlhttp.responseText == "Registro con Errores" ){
                                 alert( xmlhttp.responseText );
                             }else{
                                 alert("Succesfull!! " + xmlhttp.responseText);
@@ -114,13 +123,32 @@
                 };
             }
             
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+            
+            function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
+            
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id");
+            }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <!--[if IE 6]>
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body onload="getTest();">
+    <body onload="checkCookie();getTest();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -131,10 +159,20 @@
                     <li class="selected"><a href="index.html">Inicio</a></li>
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="login.html">Entrar</a></li>  
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                 </ul>
             </div> 
 
+            <font color="white">
+                <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
+                <p></p>
+            </font>
             <div class="title" align="center">Agregar pregunta a un test</div>
 
             <div class="left_content">
@@ -144,12 +182,14 @@
 
             <div class="right_content">
                 <p><select id="nameTest" name="nameTest" size=1> </select></p>
-                <p><div id="table"></div> </p>
+                <form name="addForm">
+                    <p><div id="table"></div> </p>
+                </form>
                 <p></p>
             </div>
             <p></p>
-            <div align="center"><button id="btn" onclick="getQuestion()">Mostrar preguntas</button></div>
-            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+            <div align="center"><button id="btn" onclick="getQuestion();">Mostrar preguntas</button></div>
+            <div align="center"><button id="btn" onclick="callWS();">Ingresar</button></div>
 
             <div id="footer">
                 <div class="footer_links">                      

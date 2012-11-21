@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,20 +72,33 @@ public class DAOStudentTest {
     public String GetUnassignTest(String idStudent, String idProfessor) {
 
         String result = "No se pudo realizar la Consulta";
-        String query = "SELECT nameTest FROM Test WHERE Test.idProfessor = \"" + idProfessor + "\" AND Test.idTest NOT IN(SELECT Test.idTest  FROM Test, StudentTest WHERE StudentTest.idTest = Test.idTest AND StudentTest.idStudent = \"" + idStudent + "\")";
+        String query = "SELECT nameTest, idTest FROM Test WHERE Test.idProfessor = \"" + idProfessor + "\" AND Test.idTest NOT IN(SELECT Test.idTest  FROM Test, StudentTest WHERE StudentTest.idTest = Test.idTest AND StudentTest.idStudent = \"" + idStudent + "\")";
         System.out.println("La Sentencia fue =" + query);
         ResultSet rs = DbConnection.runSqlStatement(query);
-        try {
-            if (rs.next()) {
-                result = rs.getString("nameTest");
-                while (rs.next()) {
-                    result = result + "," + rs.getString("nameTest");
-                }
-                System.out.println("El Resultado fue = " + result);
 
-            } else {
-                result = "Cero resultados";
+        JSONObject js = new JSONObject();
+
+        JSONArray nombres = new JSONArray();
+        JSONArray idTest = new JSONArray();
+        try {
+            while (rs.next()) {
+                nombres.put(rs.getString("nameTest"));
+                idTest.put(rs.getString("idTest"));
             }
+            js.put("nombres", nombres);
+            js.put("idTest", idTest);
+
+            result = js.toString();
+
+            if (rs.isBeforeFirst()) {
+                result = "Cero Resultados";
+            }
+            System.out.println("El Resultado fue = " + result);
+
+
+
+        } catch (JSONException ex) {
+            Logger.getLogger(DAOStudentTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DAOStudentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -112,20 +126,40 @@ public class DAOStudentTest {
     public String GetAssignTest(String idStudent) {
 
         String result = "No se pudo realizar la Consulta";
-        String query = "SELECT Test.nameTest FROM Test, StudentTest WHERE StudentTest.idStudent = \"" + idStudent + "\" AND StudentTest.idState = \"" + 3 + "\" AND StudentTest.idTest = Test.idTest";
+        String query = "SELECT Test.nameTest, Test.idTest FROM Test, StudentTest WHERE StudentTest.idStudent = \"" + idStudent + "\" AND StudentTest.idState = \"" + 3 + "\" AND StudentTest.idTest = Test.idTest";
         System.out.println("La sentenica es: " + query);
         ResultSet rs = DbConnection.runSqlStatement(query);
+
+        JSONObject js = new JSONObject();
+
+        JSONArray nombres = new JSONArray();
+        JSONArray idTest = new JSONArray();
+
+
         try {
-            if (rs.next()) {
-                result = rs.getString("nameTest");
 
-                while (rs.next()) {
-                    result = result + "," + rs.getString("nameTest");
-                }
 
-            } else {
-                result = "Cero resultados";
+            while (rs.next()) {
+
+                nombres.put(rs.getString("nameTest"));
+                idTest.put(rs.getString("idTest"));
+
             }
+            js.put("nombres", nombres);
+            js.put("idTest", idTest);
+
+            result = js.toString();
+
+
+            if (rs.isBeforeFirst()) {
+                result = "Cero Resultados";
+            }
+
+            System.out.println("El Resultado fue = " + result);
+
+
+        } catch (JSONException ex) {
+            Logger.getLogger(DAOStudentTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DAOStudentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,10 +253,9 @@ public class DAOStudentTest {
     }
 
     public String UpdateStudentTest(String idStudent, String idTest, double grade) {
-        
+
         String result = "No se pudo realizar la Operacion";
         String query = "UPDATE StudentTest SET idState= 1, grade=\"" + grade + "\" WHERE idStudent = " + idStudent + " AND idTest = \"" + idTest + "\"";
-        System.out.println( query );
         int rs = DbConnection.runSqlUpdate(query);
         if (rs != 0) {
             result = "Registro Completo";

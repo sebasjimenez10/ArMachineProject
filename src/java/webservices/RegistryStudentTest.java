@@ -28,14 +28,12 @@ import javax.ws.rs.QueryParam;
 public class RegistryStudentTest {
 
     @GET
-    public String RegistryStudentTest(@QueryParam("idStudent") String idStudent, @QueryParam("testName") String testName) {
+    public String RegistryStudentTest(@QueryParam("idStudent") String idStudent, @QueryParam("idTest") String idTest) {
         String rst;
 
 
 
-        DAOTest DAOt = new DAOTest();
-        String idTest = DAOt.getIdtest(testName);
-        
+
         DAOStudentTest DAOst = new DAOStudentTest();
         rst = DAOst.RegistryStudentTest(idStudent, idTest);
 

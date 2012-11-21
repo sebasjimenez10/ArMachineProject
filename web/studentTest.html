@@ -4,15 +4,18 @@
         <title>AR-Machine</title>
         <script type="text/javascript" src="cookies.js"></script>
         <script language="JavaScript">
+            var xmlhttp;
+            function init() {
+                // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
+                xmlhttp = new XMLHttpRequest();
+            }
             
-
-            function getTest(){
+            function getEstudents(){
                 init();
-                var profComboBox = document.getElementById("prof");
-                var idStudent = "";
+                var studentComboBox = document.getElementById("student");
+                var idProfessor = getId();
                 var list;
-                var url = "http://localhost:8080/ArMachineProject/resources/GetCompleteTest?idStudent="+ idStudent;
-                //var url = "http://armachinep.j.layershift.co.uk/resources/GetCompleteTest?";
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetStudent?idProfessor=" + idProfessor;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -20,14 +23,54 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "Registry fail" ){
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{ 
+                                list = xmlhttp.responseText;
+                                var obj = eval ("(" + list + ")");
+                                var n = 0;
+                                while ( n < obj.studentName.length ){
+                                    studentComboBox.options[studentComboBox.options.length] = new Option(obj.studentName[n], obj.idStudent[n]);
+                                    n += 1;
+                                }     
+                            }   
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            
+            function getCompleteTest(){
+                init();
+                var idStudent = document.getElementById("student");
+                var list;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetCompleteTest?idStudent="+ idStudent.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
                                 alert( xmlhttp.responseText );
                             }else{
                                 list = xmlhttp.responseText.split(",");
                                 
-                                var n = 0;
+                                var n = 0;   
                                 while ( n < list.length ){
-                                    profComboBox.options[profComboBox.options.length] = new Option(list[n], list[n]);
+                                    document.getElementById('table2').innerHTML += "<table>";
+                                    document.getElementById('table2').innerHTML += "<tr>";
+                                    document.getElementById('table2').innerHTML += "<td>";
+                                    document.getElementById('table2').innerHTML += "Nombre Test: ";
+                                    document.getElementById('table2').innerHTML += "</td>";
+                                    document.getElementById('table2').innerHTML += "<td>";
+                                    document.getElementById('table2').innerHTML += list[n];
+                                    document.getElementById('table2').innerHTML += "</td>";
+                                    document.getElementById('table2').innerHTML += "</tr>";
+                                    document.getElementById('table2').innerHTML += "</table>";
                                     n += 1;
                                 }
                             }
@@ -38,6 +81,163 @@
                 };
                 
             }
+            function getAssignTest(){
+                init();
+                var idStudent = document.getElementById("student");
+                var list;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetAssignTest?idStudent="+ idStudent.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText;
+                                
+                                var obj = eval ("(" + list + ")");
+                                
+                                var n = 0;   
+                                while ( n < obj.nombres.length ){
+                                    var value= '"'+obj.idTest[n]+'"';
+                                    document.getElementById('table').innerHTML += "<table>";
+                                    document.getElementById('table').innerHTML += "<tr>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += '<input name=assignTest id=assignTest type=radio value='+value+' />';
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += obj.nombres[n];
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "</tr>";
+                                    document.getElementById('table').innerHTML += "</table>";
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            function getUnassignTest(){
+                init();
+                //var idStudent = document.getElementById("student");
+                var idStudent = "2";
+                var list;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetUnassignTest?idStudent="+ idStudent.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText;
+                                
+                                var obj = eval ("(" + list + ")");
+                                var n = 0;   
+                                while ( n < obj.nombres.length ){
+                                    var value= '"'+obj.idTest[n]+'"';
+                                    document.getElementById('table1').innerHTML += "<table>";
+                                    document.getElementById('table1').innerHTML += "<tr>";
+                                    document.getElementById('table1').innerHTML += "<td>";
+                                    document.getElementById('table1').innerHTML += '<input name=unassignTest id=unassignTest type=radio value='+value+'/>';
+                                    document.getElementById('table1').innerHTML += "</td>";
+                                    document.getElementById('table1').innerHTML += "<td>";
+                                    document.getElementById('table1').innerHTML += obj.nombres[n];
+                                    document.getElementById('table1').innerHTML += "</td>";
+                                    document.getElementById('table1').innerHTML += "</tr>";
+                                    document.getElementById('table1').innerHTML += "</table>";
+                                    n += 1;                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            
+            function deleteAssingTest(){
+                init();
+                var idStudent = document.getElementById("student");
+                var assignTest= document.getElementById("assignTest");                 
+                var url = "http://armachinep.armachine.cloudbees.net/resources/DeleteAssignTest?idStudent="+ idStudent.value + "&idTest"+ assignTest.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Operación" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                               alert("Succesfull!! " + xmlhttp.responseText);
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            
+            function registryStudentTest(){
+                init();
+                var idStudent = document.getElementById("student");;
+                var unassignTest= document.getElementById("unassignTest"); 
+                alert(unassignTest.value);
+                var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryStudentTest?idStudent="+ idStudent.value + "&idTest"+ unassignTest.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Operación" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                               alert("Succesfull!! " + xmlhttp.responseText);
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
+            }
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+             function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
+            
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id");
+            }
+            function clear(){
+                document.getElementById('table').innerHTML += "";
+                document.getElementById('table1').innerHTML += "";
+                document.getElementById('table2').innerHTML += "";
+            }
         </script>
 
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -45,7 +245,7 @@
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body onload="getTest();">
+    <body onload="checkCookie();getEstudents();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -57,26 +257,65 @@
                     <li class="selected"><a href="index.html">Inicio</a></li>
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="login.html">Entrar</a></li>
+                     <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                 </ul>
             </div> 
 
-            <div class="title" align="center">Examenes Completados </div>
+            <font color="white">
+            <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
             <p></p>
+            </font>
+            <div class="left_content">
+                <p><div align="right">Estudiante: </div></p>
+            </div>
 
-            
-           
-            <div id="footer">
+            <div class="right_content">
+                <p><select id="student" name="student" size=1 onchange="clear();"> </select></p>
+                <p></p>
+            </div>
+
+            <p></p>
+            <div align="center">
+                <button id="btn" onclick="getAssignTest();">Asignados</button>
+                <button id="btn" onclick="getUnassignTest();">No Asignados</button>
+                <button id="btn" onclick="getCompleteTest();">Completados</button></div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <table align="center" WIDTH=600 HEIGHT=200 border="2">
+                <tr>
+                    <td>Asignados</td>
+                    <td>No Asignados</td>
+                    <td>Completados</td>
+                </tr>
+                <tr>
+                    <td id="table"></td>
+                    <td id="table1"></td>
+                    <td id="table2"></td>
+                </tr>
+                <tr>
+                    <td align="center"><button id="btn" onclick="deleteAssingTest();">Eliminar</button></td>
+                    <td align="center"><button id="btn" onclick="registryStudentTest();">Asignar</button></td>
+                    <td></td>
+                </tr>
+            </table>
+
+           <div id="footer">
                 <div class="footer_links">                      
-                    <a href="index.html">Inicio</a>
-                    <a href="register.html">Registro</a>
-                    <a href="#">Ayuda</a>
-                    <a href="login.html">Entrar</a>
-                    <a href="#">Contacto</a>          
+                   <a href="index.html">Inicio</a>
+                   <a href="register.html">Registro</a>
+                   <a href="#">Ayuda</a>
+                   <a href="login.html">Entrar</a>
                 </div>
-
-
-            </div> 
+           </div> 
 
 
 

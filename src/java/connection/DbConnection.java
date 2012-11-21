@@ -29,16 +29,20 @@ public class DbConnection {
 
     public static Connection getConection() throws IOException, ClassNotFoundException, SQLException {
 
-        String host = "jdbc:mysql://ec2-23-21-211-172.compute-1.amazonaws.com:3306/armachinep";
-        String username = "aroot";
-        String password = "armachinep";
+        if (connection == null) {
 
-        String driver = "com.mysql.jdbc.Driver";
+            String host = "jdbc:mysql://ec2-23-21-211-172.compute-1.amazonaws.com:3306/armachinep";
+            String username = "aroot";
+            String password = "armachinep";
 
-        Class.forName(driver);
-        System.out.println("DRIVER: " + driver);
-        connection = DriverManager.getConnection(host, username, password);
-        System.out.println("CONNECTION: " + connection);
+            String driver = "com.mysql.jdbc.Driver";
+
+            Class.forName(driver);
+            System.out.println("DRIVER: " + driver);
+            connection = DriverManager.getConnection(host, username, password);
+            System.out.println("CONNECTION: " + connection);
+
+        }
 
         return connection;
     }

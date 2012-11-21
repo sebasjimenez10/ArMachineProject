@@ -26,7 +26,7 @@ import javax.ws.rs.QueryParam;
 public class RegistryTag {
 
     @GET
-    public String Registry(@QueryParam("tagName") String tagName, @QueryParam("professorName") String professorName) {
+    public String Registry(@QueryParam("tagName") String tagName, @QueryParam("IdProfessor") String professorName) {
         String rst;
 
         DAOTag DAOt = new DAOTag();

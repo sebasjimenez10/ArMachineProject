@@ -64,6 +64,14 @@ margin:auto;
 clear:both;
 float:left;
 }
+#menu1{
+width:880px;
+height:38px;
+background:url(images/menu_bg1.jpg) no-repeat right;
+margin:auto;
+clear:both;
+float:left;
+}
 #menu ul{
 width: auto;
 float:left;
@@ -197,6 +205,22 @@ width:400px;
 float:right;
 padding:0px 0 0 30px;
 }
+.center_content_table{
+width:200px;
+float: next;
+padding:0 0 50px;
+}
+.left_content_table{
+width:200px;
+float:left;
+padding:10px 0 0 20px;
+}
+.right_content_table{
+width:200px;
+float:left;
+padding:10px 0 0 30px;
+}
+
 .title{
 color:#313e40;
 font-size:18px;

@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
         <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
         <script language="JavaScript">
             var xmlhttp;
             function init() {
@@ -15,10 +16,9 @@
                 var nameTest = document.getElementById("nameTest");
                 var description = document.getElementById("description");
                 //var prof = document.getgetElementById("prof");
-                var prof = "2";
+                var prof = getId();
                 var date = "2012/10/16";
-                //var url = "http://armachinep.j.layershift.co.uk/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
-                var url = "http://localhost:8080/ArMachineProject/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryTest?IdProfessor=" + prof + "&TestName=" + nameTest.value + "&TestDescription=" + description.value + "&TestDate=" + date;
                 //alert(date);
                 
                 if(nameTest.value ==0 || description.value ==0){
@@ -45,14 +45,31 @@
                     }
                 };
             }
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+            function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
             
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id");
+            }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <!--[if IE 6]>
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body>
+    <body onload="checkCookie();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -63,10 +80,20 @@
                     <li class="selected"><a href="index.html">Inicio</a></li>
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="login.html">Entrar</a></li>  
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; </a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                 </ul>
             </div> 
-
+            
+            <font color="white">
+            <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
+            <p></p>
+            </font>
             <div class="title" align="center">Agregar test</div>
 
             <div class="left_content">

@@ -2,12 +2,34 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
         <title>AR-Machine</title>
+        <script type="text/javascript" src="cookies.js"></script>
+        <script language="JavaScript">
+            function getId(){
+                var id =getCookie("id");
+                return id;
+            }
+            
+            function checkCookie(){
+                var username=getCookie("username");
+                if (username!=null && username!=""){
+                    document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
+                }else{
+                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                }
+            }
+            
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id;")
+            }
+        </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <!--[if IE 6]>
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body>
+    <body onload="checkCookie();getId();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -18,9 +40,20 @@
                     <li class="selected"><a href="index.html">Inicio</a></li>
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li>                                                                     			
+                    <li><a href="login.html">Entrar</a></li> 
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                    <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                 </ul>
-            </div>   
+            </div> 
+            
+            <font color="white">
+            <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
+            <p></p>
+            </font>
             <div class="title" align="center">Menu </div>
             <div class="tab_bg1">
                 <div class="center_content"> 
@@ -36,7 +69,7 @@
                             <div class="tab">
                                 <img src="images/icon2.png" alt="" title="" border="0" class="tab_icon" />
                                 <p class="tab_text">
-                                    <a href="question.html">Agregar test a estudiante </a><br />
+                                    <a href="studentTest.html">Agregar test a estudiante </a><br />
                                 </p>
                             </div> 
                         </div>
