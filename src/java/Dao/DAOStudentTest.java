@@ -25,31 +25,24 @@ public class DAOStudentTest {
         JSONObject js = new JSONObject();
         String query = "SELECT Student.studentName, Test.nameTest, StudentTest.grade FROM Student, Test, StudentTest WHERE Student.idProfessor =  \"" + idProfessor + "\" AND Test.idProfessor = \"" + idProfessor + "\" AND Student.idStudent = StudentTest.idStudent AND Test.idTest = StudentTest.idTest AND StudentTest.idState = 1";
 
+        JSONArray studentName = new JSONArray();
+        JSONArray nameTest = new JSONArray();
+        JSONArray grades = new JSONArray();
 
-        int length;
-        String[] studentName;
-        String[] nameTest;
-        String[] grades;
 
         ResultSet rs = DbConnection.runSqlStatement(query);
+
         try {
-            if (rs.last()) {
-                length = rs.getRow();
-                rs.beforeFirst();
-                studentName = new String[length];
-                nameTest = new String[length];
-                grades = new String[length];
+            if (rs.isBeforeFirst()) {
 
-                int i = 0;
+
                 while (rs.next()) {
-                    studentName[i] = rs.getString("studentName");
+                    studentName.put(rs.getString("studentName"));
 
-                    nameTest[i] = rs.getString("nameTest");
+                    nameTest.put(rs.getString("nameTest"));
 
-                    grades[i] = rs.getString("grade");
+                    grades.put(rs.getString("grade"));
 
-
-                    i++;
                 }
                 js.put("studentname", studentName);
                 js.put("testname", nameTest);
@@ -81,18 +74,21 @@ public class DAOStudentTest {
         JSONArray nombres = new JSONArray();
         JSONArray idTest = new JSONArray();
         try {
-            while (rs.next()) {
-                nombres.put(rs.getString("nameTest"));
-                idTest.put(rs.getString("idTest"));
-            }
-            js.put("nombres", nombres);
-            js.put("idTest", idTest);
-
-            result = js.toString();
-
             if (rs.isBeforeFirst()) {
+
+                while (rs.next()) {
+                    nombres.put(rs.getString("nameTest"));
+                    idTest.put(rs.getString("idTest"));
+                }
+                js.put("nombres", nombres);
+                js.put("idTest", idTest);
+
+                result = js.toString();
+
+            } else {
                 result = "Cero Resultados";
             }
+
             System.out.println("El Resultado fue = " + result);
 
 
@@ -102,9 +98,7 @@ public class DAOStudentTest {
         } catch (SQLException ex) {
             Logger.getLogger(DAOStudentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (result == null) {
-            result = "No se pudo realizar la consulta";
-        }
+
         return result;
 
     }
@@ -138,20 +132,21 @@ public class DAOStudentTest {
 
         try {
 
-
-            while (rs.next()) {
-
-                nombres.put(rs.getString("nameTest"));
-                idTest.put(rs.getString("idTest"));
-
-            }
-            js.put("nombres", nombres);
-            js.put("idTest", idTest);
-
-            result = js.toString();
-
-
             if (rs.isBeforeFirst()) {
+
+                while (rs.next()) {
+
+                    nombres.put(rs.getString("nameTest"));
+                    idTest.put(rs.getString("idTest"));
+
+                }
+                js.put("nombres", nombres);
+                js.put("idTest", idTest);
+
+                result = js.toString();
+
+
+            } else {
                 result = "Cero Resultados";
             }
 
@@ -170,29 +165,20 @@ public class DAOStudentTest {
 
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT Test.nameTest, StudentTest.grade FROM Test, StudentTest WHERE StudentTest.idStudent = " + idStudent + " AND StudentTest.idState = \"" + 1 + "\" AND StudentTest.idTest = Test.idTest";
-        String[] Notas;
-        String[] Test;
+        JSONArray Notas = new JSONArray();
+        JSONArray Test = new JSONArray();
         JSONObject js = new JSONObject();
         int length;
 
 
         ResultSet rs = DbConnection.runSqlStatement(query);
         try {
-            if (rs.last()) {
-                length = rs.getRow();
-                rs.beforeFirst();
-                Notas = new String[length];
-                Test = new String[length];
-
-
-                int i = 0;
+            if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    Notas[i] = rs.getString("grade");
+                    Notas.put(rs.getString("grade"));
 
-                    Test[i] = rs.getString("nameTest");
+                    Test.put(rs.getString("nameTest"));
 
-
-                    i++;
                 }
 
                 js.put("testname", Test);
@@ -242,6 +228,7 @@ public class DAOStudentTest {
 
         String result = "No se pudo realizar la Consulta";
         String query = "DELETE FROM StudentTest WHERE StudentTest.idStudent = \"" + idStudent + "\" AND StudentTest.idTest = \"" + idTest + "\"";
+        System.out.println("La Sentencia fue = "+ query);
         int rs = DbConnection.runSqlUpdate(query);
         if (rs == 0) {
             result = "No se pudo realizar la Operación";

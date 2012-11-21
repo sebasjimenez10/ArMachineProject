@@ -20,16 +20,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DAOTestQuestion {
     
     public String registryTestQuestion(String testName, String sentence) {
+        
         String resultado = "No se pudo realizar la Operación";
         
-        String[] arr = sentence.split(",");
+        String[] arr = sentence.split("/");
         String idTest;
         String[] idQuestion = new String[arr.length];
         

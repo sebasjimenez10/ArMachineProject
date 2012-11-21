@@ -20,21 +20,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 
 public class DAOTag {
 
     public String registryTag(String nombreTag, String idProfessor) {
 
-        String result = "No se pudo realizar la Operación";
-        
-        String query = "INSERT INTO Tag(tag,idProfessor) VALUES (\"" + nombreTag + "\",\"" + idProfessor + "\")";
-        System.out.println("La Sentencia es : " + query);
+        String result = "El registro no se pudo realizar la Operación";
 
-        int rs = DbConnection.runSqlUpdate(query);
-        System.out.println("RESULT SET = " + rs);
 
-        if (rs != 0) {
-            result = "Registro Completo";
+        if (idProfessor != null) {
+
+            String query = "INSERT INTO Tag(tag,idProfessor) VALUES (\"" + nombreTag + "\",\"" + idProfessor + "\")";
+            System.out.println("La Sentencia es : " + query);
+
+            int rs = DbConnection.runSqlUpdate(query);
+            System.out.println("RESULT SET = " + rs);
+
+            if (rs != 0) {
+                result = "Registro Completo";
+            }
         }
         return result;
     }
@@ -65,22 +70,26 @@ public class DAOTag {
 
         ResultSet rs = DbConnection.runSqlStatement(query);
 
+        JSONArray ja = new JSONArray();
+
         try {
-            if (rs.next()) {
-                result = rs.getString("tag");
+
+            if (rs.isBeforeFirst()) {
 
                 while (rs.next()) {
 
-                    result = result + "," + rs.getString("tag");
+                    ja.put(rs.getString("tag"));
 
 
                 }
+                result = ja.toString();
+
                 System.out.println("El resultado fue : " + result);
+
+
             } else {
-                result = "Cero resultados";
+                result = "Cero Resultados";
             }
-
-
         } catch (SQLException ex) {
             Logger.getLogger(DAOTag.class.getName()).log(Level.SEVERE, null, ex);
         }

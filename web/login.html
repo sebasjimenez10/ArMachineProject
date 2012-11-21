@@ -75,13 +75,18 @@
                     };
                 }
             }
+            function deteleCookie(){
+                del_cookie("username");
+                del_cookie("password");
+                del_cookie("id");
+            }
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <!--[if IE 6]>
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body style="font-family:Verdana,Arial,Helvetica;font-size:12px">
+    <body style="font-family:Verdana,Arial,Helvetica;font-size:12px" onload="deteleCookie();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>

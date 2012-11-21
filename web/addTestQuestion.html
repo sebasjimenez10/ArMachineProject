@@ -97,7 +97,7 @@
                         vals.push(encodeURIComponent(elm.value));
                     }
                 }
-                questionSentence = vals.join(',');
+                questionSentence = vals.join('/');
                 alert(questionSentence);
                 var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryTestQuestion?questionSentence=" + questionSentence + "&testName=" + nameTest.value;
                 if(questionSentence.value ==0 || nameTest.value ==0){
@@ -160,19 +160,14 @@
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
                     <li><a href="login.html">Entrar</a></li>  
-                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
+                    <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
                     <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
+                    <li><a style="font-family:Verdana,Arial,Helvetica;font-size:14px" align="right" id="bienvenido"></a></li>
                 </ul>
             </div> 
 
-            <font color="white">
-                <div style="font-family:Verdana,Arial,Helvetica;font-size:16px" color="white" align="right" id="bienvenido"></div>
-                <p></p>
-            </font>
+            <div><a href="professorMenu.html" class="title" align="left">Atras</a></div>
+             
             <div class="title" align="center">Agregar pregunta a un test</div>
 
             <div class="left_content">
