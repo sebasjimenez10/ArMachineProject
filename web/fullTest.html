@@ -11,16 +11,12 @@
                 xmlhttp = new XMLHttpRequest();
             }
             
-            function callWS() {
+            function getTest(){
                 init();
-                var nameTag = document.getElementById("nameTag");
-                var idProfesor = getId();
-                var url = "http://armachinep.armachine.cloudbees.net/resources/RegistryTag?tagName=" + nameTag.value +"&IdProfessor=" + idProfesor;
-                
-                if(nameTag.value ==0){
-                    alert("Debe diligenciar correctamente el formulario"); 
-                }
-                
+                var nameTestComboBox = document.getElementById("nameTest");
+                var idProfessor = getId();
+                var list;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetTest?idProfessor=" + idProfessor;
                 xmlhttp.open('GET',url,true);
                 xmlhttp.setRequestHeader("Content-Type", "text/plain");
                 xmlhttp.send(null);
@@ -28,29 +24,75 @@
 
                     if (xmlhttp.readyState == 4) {
                         if ( xmlhttp.status == 200) {
-                            if( xmlhttp.responseText == "No se pudo realizar la Operación" ){
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
                                 alert( xmlhttp.responseText );
                             }else{
-                                alert("Succesfull!! " + xmlhttp.responseText);
-                                nameTag.value="";
+                                list = xmlhttp.responseText;
+                                var obj = eval ("(" + list + ")");
+                                var n = 0;
+                                while ( n < obj.nameTest.length ){
+                                    nameTestComboBox.options[nameTestComboBox.options.length] = new Option(obj.nameTest[n]);
+                                    n += 1;
+                                }
                             }
                         }else{
                             alert("Error code ->" + xmlhttp.status);
                         }
                     }
                 };
+                
+            }
+            
+            function getTestQuestion(){
+                init();
+                var nameTest = document.getElementById("nameTest");
+                var list;
+                var url = "http://armachinep.armachine.cloudbees.net/resources/GetTestQuestion?nameTest=" + nameTest.value;
+                xmlhttp.open('GET',url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                xmlhttp.send(null);
+                xmlhttp.onreadystatechange = function() {
+
+                    if (xmlhttp.readyState == 4) {
+                        if ( xmlhttp.status == 200) {
+                            if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
+                                alert( xmlhttp.responseText );
+                            }else{
+                                list = xmlhttp.responseText;
+                               
+                                var obj = eval ("(" + list + ")");
+                               
+                                var n = 0;   
+                                while ( n < obj.Sentences.length ){
+                                    document.getElementById('table').innerHTML += "<table>";
+                                    document.getElementById('table').innerHTML += "<tr>";
+                                    document.getElementById('table').innerHTML += "<td>";
+                                    document.getElementById('table').innerHTML += obj.Sentences[n];
+                                    document.getElementById('table').innerHTML += "</td>";
+                                    document.getElementById('table').innerHTML += "</tr>";
+                                    document.getElementById('table').innerHTML += "</table>";
+                                    n += 1;
+                                }
+                            }
+                        }else{
+                            alert("Error code ->" + xmlhttp.status);
+                        }
+                    }
+                };
+                
             }
             
             function getId(){
                 var id =getCookie("id");
                 return id;
             }
+            
             function checkCookie(){
                 var username=getCookie("username");
                 if (username!=null && username!=""){
                     document.getElementById('bienvenido').innerHTML += "Usuario: "+ username;
                 }else{
-                    window.location.replace("http://armachinep.armachine.cloudbees.net/error.html");
+                    window.location.replace("http://http://armachinep.armachine.cloudbees.net/error.html");
                 }
             }
             
@@ -65,7 +107,7 @@
                 <script type="text/javascript" src="unitpngfix.js"></script>
         <![endif]--> 
     </head>
-    <body onload="checkCookie();">
+    <body onload="checkCookie();getTest();">
         <div class="wrap">
             <div class="header">
                 <div class="logo"><a href="index.html"><img src="images/logo.gif" alt="" title="" border="0" /></a></div>
@@ -76,7 +118,7 @@
                     <li class="selected"><a href="index.html">Inicio</a></li>
                     <li><a href="register.html">Registro</a></li>
                     <li><a href="#">Ayuda</a></li>                                                                     
-                    <li><a href="login.html">Entrar</a></li> 
+                    <li><a href="login.html">Entrar</a></li>  
                     <li><a href="#" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a></li>
                     <li><a href="login.html" onclick="deteleCookie();" align="right">Salir</a></li> 
                     <li><a style="font-family:Verdana,Arial,Helvetica;font-size:14px" align="right" id="bienvenido"></a></li>
@@ -84,19 +126,23 @@
             </div> 
 
             <div><a href="professorMenu.html" class="title" align="left">Atras</a></div>
-            
-            <div class="title" align="center">Agregar Categoria</div>
+             
+            <div class="title" align="center">Agregar pregunta a un test</div>
 
             <div class="left_content">
-                <p><div align="right">Nombre de categoria: </div></p>
+                <p><div align="right">Nombre test: </div></p>
+                <p><div align="right">Preguntas: </div></p>
             </div>
 
             <div class="right_content">
-                <p><input id="nameTag" name="nameTag"/></p>
+                <p><select id="nameTest" name="nameTest" size=1> </select></p>
+                <form name="addForm">
+                    <p><div id="table"></div> </p>
+                </form>
                 <p></p>
             </div>
-
-            <div align="center"><button id="btn" onclick="callWS()">Ingresar</button></div>
+            <p></p>
+            <div align="center"><button id="btn" onclick="getTestQuestion();">Mostrar preguntas</button></div>
 
             <div id="footer">
                 <div class="footer_links">                      

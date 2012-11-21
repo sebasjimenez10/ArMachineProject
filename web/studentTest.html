@@ -250,9 +250,10 @@
                 del_cookie("id");
             }
             function clear(){
-                document.getElementById('table').innerHTML += " ";
-                document.getElementById('table1').innerHTML += " ";
-                document.getElementById('table2').innerHTML += " ";
+                document.getElementById('table').innerHTML = " ";
+                document.getElementById('table1').innerHTML = " ";
+                document.getElementById('table2').innerHTML = " ";
+                return true;
             }
         </script>
 
@@ -286,7 +287,7 @@
             </div>
 
             <div class="right_content">
-                <p><select id="student" name="student" size=1 onchange="clear();"> </select></p>
+                <p><select id="student" name="student" size=1 onclick="clear();"> </select></p>
                 <p></p>
             </div>
 

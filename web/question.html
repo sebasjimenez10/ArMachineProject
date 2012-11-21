@@ -27,11 +27,11 @@
                             if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
                                 alert( xmlhttp.responseText );
                             }else{
-                                list = xmlhttp.responseText.split(",");
-                                
+                                list = xmlhttp.responseText;
+                                var obj = eval ("(" + list + ")");
                                 var n = 0;
-                                while ( n < list.length ){
-                                    tagComboBox.options[tagComboBox.options.length] = new Option(list[n], list[n]);
+                                while ( n < obj.length ){
+                                    tagComboBox.options[tagComboBox.options.length] = new Option(obj[n]);
                                     n += 1;
                                 }
                             }

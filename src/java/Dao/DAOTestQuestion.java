@@ -83,6 +83,9 @@ public class DAOTestQuestion {
         
         String result = "No se pudo realizar la Consulta";
         String query = "SELECT Question.idQuestion, Question.sentence, Question.optionA, Question.optionB, Question.optionC, Question.optionD FROM Question, TestQuestion WHERE TestQuestion.idTest = \"" + idTest + "\" AND TestQuestion.idQuestion = Question.idQuestion ";
+        
+        System.out.println( "La sentencia fue = " + query );
+        
         JSONObject js = new JSONObject();
         JSONArray idQuestions = new JSONArray();
         JSONArray Sentences = new JSONArray();
