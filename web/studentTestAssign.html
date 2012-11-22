@@ -25,17 +25,18 @@
                             if( xmlhttp.responseText == "No se pudo realizar la Consulta" ){
                                 alert( xmlhttp.responseText );
                             }else{
-                                list = xmlhttp.responseText.split(",");
-                                
+                                list = xmlhttp.responseText;
+                                var obj = eval ("(" + list + ")");
                                 var n = 0;   
-                                while ( n < list.length ){
+                                while ( n < obj.nombres.length ){
                                     document.getElementById('table').innerHTML += "<table>";
                                     document.getElementById('table').innerHTML += "<tr>";
                                     document.getElementById('table').innerHTML += "<td>";
                                     document.getElementById('table').innerHTML += "Nombre Test: ";
                                     document.getElementById('table').innerHTML += "</td>";
                                     document.getElementById('table').innerHTML += "<td>";
-                                    document.getElementById('table').innerHTML += list[n];
+                                    //document.getElementById('table').innerHTML += list[n];
+                                    document.getElementById('table').innerHTML += obj.nombres[n];
                                     document.getElementById('table').innerHTML += "</td>";
                                     document.getElementById('table').innerHTML += "</tr>";
                                     document.getElementById('table').innerHTML += "</table>";
